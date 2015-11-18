@@ -37,7 +37,6 @@ function user($operation, $username, $password, $name, $city){
 	$secure_password = sha1($password);
 	switch($operation){
 		// create new user
-<<<<<<< HEAD
 		case "CREATE":
 			$stmt = $db->prepare('INSERT INTO User(username, password, name, address, zipcode1, zipcode2)
 								values (:username, :password, :name, :address, :zip1, :zip2)');
