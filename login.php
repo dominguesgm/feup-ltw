@@ -5,11 +5,9 @@
   </head>
   <body>
     <h2>Login</h2>
-      <form action="/database/register.php" method="post">
+      <form action="database/action_register.php" method="post">
         <input id="username" type="text" placeholder="Username"/>
         <input id="password" type="password" placeholder="Password"/>
-        <input id="fullName" type="text" placeholder="Name"/>
-        <input id="city" type="text" placeholder="City"/>
         <input id="submit" type="button" value="Login"/>
       </form>
   </body>
