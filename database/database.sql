@@ -5,11 +5,7 @@ CREATE TABLE User(
 	username TEXT PRIMARY KEY,
 	password TEXT NOT NULL,
 	name TEXT NOT NULL,
-	address TEXT NOT NULL,
-	zipCode2 INTEGER NOT NULL, 
-	zipCode1 INTEGER NOT NULL,
-	CONSTRAINT ck_zipCode2 CHECK (zipCode2 >= 0 AND zipCode2 <= 999)
-	CONSTRAINT ck_zipCode1 CHECK (zipCode1 >= 0 AND zipCode1 <= 9999)
+	city TEXT NOT NULL,
 );
 
 DROP TABLE IF EXISTS Event;
@@ -18,13 +14,10 @@ CREATE TABLE Event(
 	type REFERENCES EventType(eventType) NOT NULL,
 	description TEXT NOT NULL,
 	time TEXT NOT NULL,
-	address TEXT NOT NULL,
+	city TEXT NOT NULL,
+	address TEXT,
 	imageURL TEXT NOT NULL,
 	publicEvent INTEGER NOT NULL,
-	zipCode2 INTEGER NOT NULL, 
-	zipCode1 INTEGER NOT NULL,
-	CONSTRAINT ck_zipCode2 CHECK (zipCode2 >= 0 AND zipCode2 <= 999)
-	CONSTRAINT ck_zipCode1 CHECK (zipCode1 >= 0 AND zipCode1 <= 9999)
 	CONSTRAINT ck_public CHECK (publicEvent = 0 OR publicEvent = 1)
 );
 

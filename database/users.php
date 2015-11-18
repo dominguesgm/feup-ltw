@@ -2,13 +2,13 @@
 include_once('connection.php');
 
 // create a new user with the given parameters
-function createUser($username, $password, $name, $address, $zip1, $zip2){
-	user('CREATE', $username, $password, $name, $address, $zip1, $zip2);
+function createUser($username, $password, $name, $city){
+	user('CREATE', $username, $password, $name, $city);
 }
 
 // update the user's information to the given parameters
-function updateUser($username, $password, $name, $address, $zip1, $zip2){
-	user('UPDATE', $username, $password, $name, $address, $zip1, $zip2);
+function updateUser($username, $password, $name, $city){
+	user('UPDATE', $username, $password, $name, $city);
 }
 
 // delete the user with the given username from the database
@@ -31,12 +31,13 @@ function userExists($username, $password){
 }
 
 // user operarions
-function user($operation, $username, $password, $name, $address, $zip1, $zip2){
+function user($operation, $username, $password, $name, $city){
 	// open database
 	$db = openDB();
 	$secure_password = sha1($password);
 	switch($operation){
 		// create new user
+<<<<<<< HEAD
 		case "CREATE":
 			$stmt = $db->prepare('INSERT INTO User(username, password, name, address, zipcode1, zipcode2)
 								values (:username, :password, :name, :address, :zip1, :zip2)');
@@ -59,9 +60,7 @@ function user($operation, $username, $password, $name, $address, $zip1, $zip2){
 	$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
 	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STRING);
 	$stmt->bindParam(':name', $name, PDO::PARAM_STRING);
-	$stmt->bindParam(':address', $address, PDO::PARAM_STRING);
-	$stmt->bindParam(':zip1', $zip1, PDO::PARAM_INT);
-	$stmt->bindParam(':zip2', $zip2, PDO::PARAM_INT);
+	$stmt->bindParam(':city', $city, PDO::PARAM_STRING);
 	$stmt->execute();
 }
 

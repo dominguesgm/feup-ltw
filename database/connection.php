@@ -1,4 +1,5 @@
 <?php 
+include_once('database/users.php');
 
 // open database
 function openDB(){
