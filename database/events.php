@@ -18,8 +18,8 @@ function deleteEvent($eventID){
 
 // event operarions
 function event($operation, $id, $username, $type, $description, $time, $city, $address, $imageURL, $publicEvent){
-	// open database
-	$db = openDB();
+	
+	global $db;
 
 	switch ($operation) {
 		// create event
@@ -62,7 +62,7 @@ function event($operation, $id, $username, $type, $description, $time, $city, $a
 		$stmtID->bindParam(':imageURL', $imageURL, PDO::PARAM_STRING);	
 		$stmtID->bindParam(':publicEvent', $publicEvent, PDO::PARAM_STRING);
 		$stmtID->execute();
-		$eventID = stmtID->fetch();
+		$eventID=$stmtID->fetch();
 
 		// add event to user record
 		$stmtEventCreator = $db->prepare('INSERT INTO EventCreator(eventID, username) values (:eventID, :username)');
@@ -74,7 +74,7 @@ function event($operation, $id, $username, $type, $description, $time, $city, $a
 
 function attendEvent($username, $eventID, $attending = false){
 	// open database
-	$db = openDB();
+	global $db;
 
 	if($attending){
 		// attend event
@@ -92,7 +92,7 @@ function attendEvent($username, $eventID, $attending = false){
 
 function getEvent($eventID){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID');
 	$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
@@ -104,7 +104,7 @@ function getEvent($eventID){
 // return all public events
 function getEvents(){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM  Event WHERE publicEvent = 1');
 	$stmt->execute();
@@ -112,9 +112,9 @@ function getEvents(){
 }
 
 // return all public events
-function getEvents($city){
+function getEventsByCity($city){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM  Event WHERE publicEvent = 1 AND city=:city');
 	$stmt->bindParam(':city', $city, PDO::PARAM_STRING);
@@ -125,7 +125,7 @@ function getEvents($city){
 // return user with given username and password
 function getUserEvents($username){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM  Event 
 						WHERE id in (SELECT eventID FROM EventCreator WHERE username=:username)');
@@ -137,7 +137,7 @@ function getUserEvents($username){
 // return user with given username and password
 function getAttendingEvents($username){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM  Event 
 						WHERE id in (SELECT eventID FROM Attending WHERE username=:username)');

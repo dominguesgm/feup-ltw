@@ -5,6 +5,8 @@ CREATE TABLE User(
 	username TEXT PRIMARY KEY,
 	password TEXT NOT NULL,
 	name TEXT NOT NULL,
+	email TEXT NOT NULL,
+	phoneNumber TEXT,
 	city TEXT NOT NULL
 );
 
@@ -76,4 +78,5 @@ INSERT INTO EventType(eventType) values ('Theme party');
 INSERT INTO EventType(eventType) values ('Trade show');
 INSERT INTO EventType(eventType) values ('Wedding');
 INSERT INTO EventType(eventType) values ('VIP event');
-INSERT INTO User (username, password, name, city) values ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin');
+
+INSERT INTO User(username, password, name, email, city) values ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Admin', 'admin@admin.com', 'AdminCity');
