@@ -1,5 +1,11 @@
+$("input").keyup(function(event){
+  if(event.keyCode == 13)
+    $("input").parent().submit();
+});
 
-function login(){
+
+$("form.login").on('submit', function(e){
+  e.preventDefault();
   // get contents of the form
   var values = {};
   $('form input').each(function() {
@@ -23,9 +29,10 @@ function login(){
   }
   // checks json input. check if success is set, or error is set
   // redirect to index, with the cookie set in case of success
-}
+});
 
-function register(){
+$("form.register").on('submit', function(e){
+  e.preventDefault();
   // get contents of the form
   var values = {};
   $('form input').each(function() {
@@ -51,11 +58,4 @@ function register(){
   // send ajax to action_register.php
   // checks json input. check if success is set, or error is set
   // redirect to index, with the cookie set in case of success
-}
-
-function main(){
-  $('#login').click(login);
-  $('#register').click(register);
-}
-
-$(document).ready(main);
+});
