@@ -18,7 +18,8 @@ function login(){
       console.log(html);
       var json = JSON.parse(html);
       if("success" in json)
-        window.location.replace("index.php");
+ //       window.location.replace("index.php");
+       window.location.replace("new_event.php");
     });
   }
   // checks json input. check if success is set, or error is set

@@ -1,27 +1,27 @@
-<form id="new_event" action="action_new_event.php" method="post">
-  <label> Name:
-    <input type="text" name="nametag" value="" required>
-  </label><br>
-  <label> Type:
-  <select></select>
-  </label><br>
-  <label> Description:
-    <textarea name="description"></textarea>
-  </label><br>
-  <label> Time:
-    <input type="text" name="time" value="">
-  </label><br>
-  <label> City:
-    <input type="text" name="city" value="">
-  </label><br>
-  <label> Address:
-    <input type="text" name="address" value="">
-  </label><br>
-  <label> Image:
-    <input type="text" name="imageURL" value="">
-  </label><br>
-  <label> Public event:
-    <input type="checkbox" name="publicEvent" value="Public event" checked><br>
-  </label><br>
-  <input type="submit">
-</div>
+<form id="new_event" action="database/action_new_event.php" method="post">
+    <label> Tag </label> 
+    <input type="text" name="nameTag" placeholder="Event tag" required />
+      <br>
+    <label> Type </label> 
+    <select></select>
+      <br>
+    <label> Description </label>
+    <textarea name="description"  placeholder="Description" /></textarea> 
+      <br>
+    <label> Time  </label>
+    <input type="text" name="time" placeholder="Time" required />
+      <br>
+    <label> City  </label>
+    <input type="text" name="city" placeholder="City" required />
+      <br>
+    <label> Address  </label>
+    <input type="text" name="address" placeholder="Address" />
+      <br>
+    <label> Image  </label>
+    <input type="text" name="imageURL" placeholder="Image URL" />
+      <br>
+    <label> Public event </label>
+    <input type="checkbox" name="publicEvent" checked /><br>
+      <br>
+    <input id="saveEvent" type="button" value="Save event" />
+</form>

@@ -1,40 +1,71 @@
-var eventTypes = [];
 
-$().ready(loadDocument);
+function loadEventTypes(){
+  $.getJSON("database/event_types.php", function(result){
+    console.log($("#new_event"));
+          $.each(result, function(key, eventType){
+              var option = $("<option></option>");
+              option.text(eventType);
+              option.val(eventType);
 
-
-function loadDocument(){
-  	loadEventTypes();
+              $("#new_event select").append(option);
+          });
+      });
 }
 
-function loadEventTypes() {
+function getFormInfo(){
+	var values = [];
 
-	jQuery.ajax({
-    type: "POST",
-    url: 'database/event_types.php',
-    dataType: 'json',
-    data: {functionname: 'getEventTypes'},
+	$('form input').each(function() {
+    values[this.name] = $(this).val();
 
-    success: function (obj, textstatus) {
-                  if( !('error' in obj) ) {
-                      eventTypes = obj.result;
-                      eventTypesLoaded();
-                  }
-                  else {
-                      console.log(obj.error);
-                  }
-            }
-	});
+    if(this.name == 'publicEvent')
+    	values[this.name] = ($(this).is(':checked')) ? 1 : 0;
+  	});
+
+  	$('form textarea').each(function() {
+	    values[this.name] = $(this).val();
+  	});
+
+  	values['type'] = $('form select').val();
+
+  	// debug
+  	for(v in values)
+  		console.log(v + ' -> ' + values[v]);
+
+  	return values;
 }
 
-function eventTypesLoaded(){
-	for(type in eventTypes){
-  		// Create the option tag for the event type
-  		var option = $("<option></option>");
-  		option.text(type['eventType']);
-  		option.val(type['eventType']);
-		  
- 	 	// Insert the option tag in the select
-  		$("#new_event .line:first-child select").append(option);
-	}
+function saveEvent(){
+
+  // get the form info
+  var values = getFormInfo();
+
+  if(values['type'] != "" && values['description'] != "" 
+  		&& values['city'] != "" && values['time'] != "" && values['publicEvent'] != ""){
+    $.ajax({
+      type: "post",
+      url: "database/action_new_event.php",
+      datatype: "json",
+      data: JSON.stringify(values)
+    }).done(function(html){
+      console.log(html);
+      var json = JSON.parse(html);
+      console.log(json);
+      if("success" in json){
+      	console.log('success');
+        window.location.replace("index.php"); 	// TODO change to redirect to event page
+    	}
+    });
+  }
+  // verify contents integrity
+  // send ajax to action_register.php
+  // checks json input. check if success is set, or error is set
+  // redirect to index, with the cookie set in case of success
 }
+
+function main(){
+  loadEventTypes();
+  $('#new_event #saveEvent').click(saveEvent);
+}
+
+$(document).ready(main);
