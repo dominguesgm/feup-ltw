@@ -8,7 +8,7 @@
       <form action="database/action_register.php" method="post">
         <input name="username" type="text" placeholder="Username"/>
         <input name="password" type="password" placeholder="Password"/>
-        <input type="submit" value="Login"/>
+        <input id="login" type="button" value="Login"/>
       </form>
   </body>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>

@@ -1,8 +1,4 @@
-<?php 
-
-// open database
-function openDB(){
-	return new PDO('sqlite:databasea.db');
-}
-
+<?php
+	$db = new PDO('sqlite:database.db');
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>

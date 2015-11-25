@@ -1,6 +1,7 @@
 <?php session_start();
-  if(!isset($_SESSION['username'])){
-    header("Location: login.php")?>
+  if(!isset($_SESSION['username']))
+    header("Location: login.php");
+  unset($_SESSION['username']);?>
 <html>
   <head>
     <title>EventNetwork</title>
@@ -19,4 +20,3 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="scripts/authentication.js"></script>
 </html>
-<?php } ?>

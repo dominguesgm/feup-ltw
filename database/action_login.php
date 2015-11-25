@@ -1,15 +1,14 @@
 <?php session_start();
   include_once('users.php');
-  var_dump($_POST);
-  if(isset($_POST['username']) && isset($_POST['password'])){
-    if(userExists($_POST['username'], $_POST['password'])){
-      $_SESSION['username'] = $_POST['username'];
-      echo 'worked';
-      //header('Location: index.php');
-    } else{
-      $_SESSION['issue'] = 'Username invalid or already in use';
-      echo 'not worked';
-      //header('Location: index.php');
-    }
-  }
+  $body = file_get_contents('php://input');
+  if(isset($body)){
+    $json = json_decode($body, true);
+    if((isset($json['username'])) && (isset($json['password']))){
+      if(getUser($json['username'], $json['password'])){
+        $_SESSION['username'] = $json['username'];
+        echo json_encode(array('success' => 'User signed in correctly'));
+      } else echo json_encode(array('error' => "Username and password don't match"));
+    } else echo json_encode(array('error' => "Request fields came empty"));
+  } else echo json_encode(array('error' => "Request is empty"));
+
 ?>

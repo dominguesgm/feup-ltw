@@ -5,7 +5,7 @@ CREATE TABLE User(
 	username TEXT PRIMARY KEY,
 	password TEXT NOT NULL,
 	name TEXT NOT NULL,
-	city TEXT NOT NULL,
+	city TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS Event;
@@ -49,11 +49,11 @@ CREATE TABLE EventType(
 	eventType TEXT PRIMARY KEY
 );
 
-CREATE TRIGGER CancelUserEvents
+CREATE TRIGGER IF NOT EXISTS CancelUserEvents 
 AFTER DELETE ON User
 FOR EACH ROW
 BEGIN
-DELETE FROM Event WHERE id in (SELECT eventId FROM EventCreator WHERE username = OLD.username)
+DELETE FROM Event WHERE id in (SELECT eventId FROM EventCreator WHERE username = OLD.username);
 END;
 
 INSERT INTO EventType(eventType) values ('Award ceremony');
@@ -76,4 +76,4 @@ INSERT INTO EventType(eventType) values ('Theme party');
 INSERT INTO EventType(eventType) values ('Trade show');
 INSERT INTO EventType(eventType) values ('Wedding');
 INSERT INTO EventType(eventType) values ('VIP event');
-
+INSERT INTO User (username, password, name, city) values ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'admin');

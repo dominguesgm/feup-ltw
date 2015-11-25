@@ -3,7 +3,20 @@ include_once('connection.php');
 
 // create a new user with the given parameters
 function createUser($username, $password, $name, $city){
-	user('CREATE', $username, $password, $name, $city);
+	global $db;
+	$stmt = $db->prepare('INSERT INTO User(username, password, name, city) values (:username, :password, :name, :city)');
+	$secure_password = hash("sha256", $password);
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
+	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
+
+	try{
+    $stmt->execute();
+		return true;
+  } catch(PDOException $e) {
+    return false;
+  }
 }
 
 // update the user's information to the given parameters
@@ -16,25 +29,46 @@ function deleteUser($username, $password){
 	user('DELETE', $username, $password);
 }
 
-// Detects if user exists in the database
-function userExists($username, $password){
-	$stmt = $db->prepare('SELECT user FROM User WHERE username = :username AND password = :password');
+// Detects if user/password combination exists
+function getUser($username, $password){
+	global  $db;
+	$stmt = $db->prepare('SELECT username FROM User WHERE username = :username AND password = :password');
 
-	$secure_password = sha1($password);
-	$stmt->bindParam(':username', $username, PARAM_STRING);
-	$stmt->bindParam(':password', $secure_password, PARAM_STRING);
-	$stmt->execute();
-	$result = $stmt->fetch();
-	if($result['username'] != $username)
-		return false;
-	return true;
+	$secure_password = hash("sha256", $password);
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
+	try{
+    $stmt->execute();
+		$result = $stmt->fetch();
+		if($result['username'] != $username)
+			return false;
+		return true;
+  } catch(PDOException $e) {
+    return false;
+  }
+}
+
+// Detects if user exists in the database
+function userExists($username){
+	global  $db;
+	$stmt = $db->prepare('SELECT username FROM User WHERE username = :username');
+
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	try{
+    $stmt->execute();
+		$result = $stmt->fetch();
+		if($result['username'] != $username)
+			return false;
+		return true;
+  } catch(PDOException $e) {
+    return true;
+  }
 }
 
 // user operarions
 function user($operation, $username, $password, $name, $city){
-	// open database
-	$db = openDB();
-	$secure_password = sha1($password);
+	global $db;
+	$secure_password = hash("sha256", $password);
 	switch($operation){
 		// create new user
 		case "CREATE":
@@ -48,29 +82,19 @@ function user($operation, $username, $password, $name, $city){
 			break;
 		case 'DELETE':
 			$stmt = $db->prepare('DELETE FROM User WHERE username=:username AND password=:password');
-			$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
-			$stmt->bindParam(':password', $secure_password, PDO::PARAM_STRING);
+			$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+			$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
 			$stmt->execute();
 			return;
 		default:
 			return;
 	}
 
-	$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
-	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STRING);
-	$stmt->bindParam(':name', $name, PDO::PARAM_STRING);
-	$stmt->bindParam(':city', $city, PDO::PARAM_STRING);
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
+	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
 	$stmt->execute();
-}
-
-// return user with given username and password
-function getUser($username, $password){
-	$db = openDB();
-	$stmt = $db->prepare('SELECT * FROM User WHERE username = :username AND password=:password');
-	$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
-	$stmt->bindParam(':password', $password, PDO::PARAM_STRING);
-	$stmt->execute();
-	return $stmt->fetch();
 }
 
 ?>
