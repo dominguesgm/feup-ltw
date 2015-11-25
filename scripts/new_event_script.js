@@ -13,7 +13,7 @@ function loadEventTypes(){
 }
 
 function getFormInfo(){
-	var values = [];
+	var values = {};
 
 	$('form input').each(function() {
     values[this.name] = $(this).val();
@@ -27,10 +27,10 @@ function getFormInfo(){
   	});
 
   	values['type'] = $('form select').val();
-
+/*
   	// debug
   	for(v in values)
-  		console.log(v + ' -> ' + values[v]);
+  		console.log(v + ' -> ' + values[v]);*/
 
   	return values;
 }
@@ -40,8 +40,8 @@ function saveEvent(){
   // get the form info
   var values = getFormInfo();
 
-  if(values['type'] != "" && values['description'] != "" 
-  		&& values['city'] != "" && values['time'] != "" && values['publicEvent'] != ""){
+  if(values['type'] != "" && values['description'] != ""
+  		&& values['city'] != "" && values['time'] != ""){
     $.ajax({
       type: "post",
       url: "database/action_new_event.php",
@@ -53,7 +53,7 @@ function saveEvent(){
       console.log(json);
       if("success" in json){
       	console.log('success');
-        window.location.replace("index.php"); 	// TODO change to redirect to event page
+        window.location.replace("./?event=" + json['success']); 	// TODO change to redirect to event page
     	}
     });
   }

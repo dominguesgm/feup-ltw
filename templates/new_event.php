@@ -1,12 +1,12 @@
 <form id="new_event" action="database/action_new_event.php" method="post">
-    <label> Tag </label> 
+    <label> Tag </label>
     <input type="text" name="nameTag" placeholder="Event tag" required />
       <br>
-    <label> Type </label> 
+    <label> Type </label>
     <select></select>
       <br>
     <label> Description </label>
-    <textarea name="description"  placeholder="Description" /></textarea> 
+    <textarea name="description"  placeholder="Description" /></textarea>
       <br>
     <label> Time  </label>
     <input type="text" name="time" placeholder="Time" required />

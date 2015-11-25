@@ -2,14 +2,16 @@
 include_once('connection.php');
 
 // create a new user with the given parameters
-function createUser($username, $password, $name, $city){
+function createUser($username, $password, $name, $city, $email, $phoneNumber){
 	global $db;
-	$stmt = $db->prepare('INSERT INTO User(username, password, name, city) values (:username, :password, :name, :city)');
+	$stmt = $db->prepare('INSERT INTO User(username, password, name, city, email, phoneNumber) values (:username, :password, :name, :city, :email, :phoneNumber)');
 	$secure_password = hash("sha256", $password);
 	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
 	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
 	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
 	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
+	$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+	$stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
 
 	try{
     $stmt->execute();

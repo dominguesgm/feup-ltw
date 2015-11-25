@@ -11,7 +11,6 @@ $("form.login").on('submit', function(e){
   $('form input').each(function() {
       values[this.name] = $(this).val();
   });
-  console.log("Username: " + values["username"] + " Password: " + values["password"]);
   // verify contents integrity
   // send ajax to action_login.php
   if(values["username"] != "" && values["password"] != ""){
@@ -24,8 +23,7 @@ $("form.login").on('submit', function(e){
       console.log(html);
       var json = JSON.parse(html);
       if("success" in json)
- //       window.location.replace("index.php");
-       window.location.replace("new_event.php");
+        window.location.replace("index.php");
     });
   }
   // checks json input. check if success is set, or error is set
@@ -40,9 +38,7 @@ $("form.register").on('submit', function(e){
       values[this.name] = $(this).val();
   });
 
-  console.log(values);
-
-  if(values["username"] != "" && values["password"] != "" && values["city"] != "" && values["name"] != ""){
+  if(values["username"] != "" && values["password"] != "" && values["city"] != "" && values["name"] != "" && values["email"] != ""){
     $.ajax({
       type: "post",
       url: "database/action_register.php",

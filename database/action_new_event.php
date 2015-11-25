@@ -4,20 +4,20 @@
 
   if((isset($_SESSION['username']))) {
 
-	$body = file_get_contents('php://input');
-  
-	if(isset($body)){
-	    $json = json_decode($body, true);
+  	$body = file_get_contents('php://input');
+
+  	if(isset($body)){
+  	  $json = json_decode($body, true);
 
 	    if( (isset($json['nameTag'])) && (isset($json['type'])) && (isset($json['description']))
-	    	&& (isset($json['time'])) && (isset($json['city'])) && (isset($json['address'])) 
+	    	&& (isset($json['time'])) && (isset($json['city'])) && (isset($json['address']))
 	    	&& (isset($json['imageURL'])) && (isset($json['publicEvent']))) {
-	     
-	     	$eventId = createEvent($_SESSION['username'], $json['nameTag'], 
-						     		$json['type'], $json['description'], $json['time'], 
+
+	     	$eventId = createEvent($_SESSION['username'], $json['nameTag'],
+						     		$json['type'], $json['description'], $json['time'],
 						     			$json['city'], $json['address'], $json['imageURL'], $json['publicEvent']);
-		        
-		        if($eventId!=-1)    
+
+		        if($eventId!=-1)
 		        	echo json_encode(array('success' => $eventId));
 		        else echo json_encode(array('error' => "Problem creating event"));
 
