@@ -9,7 +9,7 @@
     <textarea name="description"  placeholder="Description" /></textarea>
       <br>
     <label> Time  </label>
-    <input type="text" name="time" placeholder="Time" required />
+    <input type="datetime-local" name="time" placeholder="Time" required />
       <br>
     <label> City  </label>
     <input type="text" name="city" placeholder="City" required />

@@ -40,22 +40,27 @@ function saveEvent(){
   // get the form info
   var values = getFormInfo();
 
-  if(values['type'] != "" && values['description'] != ""
-  		&& values['city'] != "" && values['time'] != ""){
-    $.ajax({
-      type: "post",
-      url: "database/action_new_event.php",
-      datatype: "json",
-      data: JSON.stringify(values)
-    }).done(function(html){
-      console.log(html);
-      var json = JSON.parse(html);
-      console.log(json);
-      if("success" in json){
-      	console.log('success');
-        window.location.replace("./?event=" + json['success']); 	// TODO change to redirect to event page
-    	}
-    });
+  if(values['type'] != "" && values['nameTag'] && values['description'] != "" && values['city'] != "" && values['time'] != ""){
+    var currentDate = new Date();
+    var eventDate = new Date(values['time']);
+    if(currentDate < eventDate){
+      $.ajax({
+        type: "post",
+        url: "database/action_new_event.php",
+        datatype: "json",
+        data: JSON.stringify(values)
+      }).done(function(html){
+        console.log(html);
+        var json = JSON.parse(html);
+        console.log(json);
+        if("success" in json){
+        	console.log('success');
+          window.location.replace("./?event=" + json['success']); 	// TODO change to redirect to event page
+      	}
+      });
+    } else {
+      // TODO display error of impossible date
+    }
   }
   // verify contents integrity
   // send ajax to action_register.php

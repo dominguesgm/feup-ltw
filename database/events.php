@@ -219,7 +219,6 @@ function getAttendingEvents($username){
   	}
 }
 
-// TODO Test query!!!
 // return events the user is attending
 function getHosttestEvents($maxEvents = 10){
 	// open database

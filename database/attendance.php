@@ -1,28 +1,46 @@
 <?php
+session_start();
 include_once('connection.php');
-function eventsUserisAttending($username){
-  global $db;
-  $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username");
-  $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+$body = file_get_contents('php://input');
+if(isset($body)){
+  $json = json_decode($body, true);
+
+  date_default_timezone_set("UTC");
+  $currentDate = date("Y-m-d H:i");
+
+  if(isset($json['attended']))
+    $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) < datetime( :currentDate ) ORDER BY datetime(time) DESC");
+  else
+    $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) > datetime( :currentDate ) ORDER BY datetime(time) DESC");
+
+  $_SESSION['username'] = 'admin';
+
+  $stmt->bindParam(":username", $_SESSION['username'], PDO::PARAM_STR);
+  $stmt->bindParam(":currentDate", $currentDate, PDO::PARAM_STR);
 
   try{
     $stmt->execute();
     $result = $stmt->fetchAll();
   }catch(PDOException $e){
-    return $e->getMessage();
+    echo json_encode(array("error" => "Error on query"));
+    return;
   }
 
-  for($i = 0; $i < count($result); $i++){?>
-    <div class="shortEvent">
-      <?php echo '<h2>' . $result[$i]['nameTag'] . '</h2>';
-            echo '<h4>By: ' . $result[$i]['creator'] . '</h4>';
-            echo '<h4>What: ' . $result[$i]['type'] . '</h4>';
-            echo '<h4>Where: ' . $result[$i]['city'] . '</h4>';
-            echo '<h4>When: ' . $result[$i]['time'] . '</h4>';
-            echo '<h6>Where exactly: ' . $result[$i]['address'] . '</h6>';
-            echo '<p>Description: ' . $result[$i]['description'] . '</p>';
-            if($result[$i]['imageURL'] != "")
-                echo '<img src="' . $result[$i]['imageURL'] . '">'?>
-    </div><?php
+  $jsonResponse = array();
+
+  for($i = 0; $i < count($result); $i++){
+    $tempArray = array("nameTag" => $result[$i]['nameTag'], "creator" => $result[$i]['creator'], "type" => $result[$i]['type'],
+                      "city" => $result[$i]['city'], "time" => $result[$i]['time'], "address" => $result[$i]['address'],
+                      "description" => $result[$i]['description'], "imageURL" => $result[$i]['imageURL'], "id" => $result[$i]["id"]);
+    $jsonResponse[$i] = $tempArray;
   }
-}?>
+
+  if(count($result) == 0)
+    echo json_encode(array("empty" => "No events to attend"));
+  else
+    echo json_encode($jsonResponse);
+
+}
+//TODO test
+
+?>
