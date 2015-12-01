@@ -48,11 +48,10 @@ function createEvent($username, $nameTag, $type, $description, $time, $city, $ad
 }
 
 // updates the event's information to the given parameters
-function updateEvent($eventID, $username, $nameTag, $type, $description, $time, $city, $address, $imageURL, $publicEvent){
+function updateEvent($id, $username, $nameTag, $type, $description, $time, $city, $address, $imageURL, $publicEvent){
 	global $db;
 
-	$stmt = $db->prepare('UPDATE Event SET nameTag=:nameTag, type=:type, description=:description, time=:time, city=:city, address=:address,
-								imageURL=:imageURL, publicEvent=:publicEvent WHERE id=:id AND creator=:creator');
+	$stmt = $db->prepare('UPDATE Event SET nameTag=:nameTag, type=:type, description=:description, time=:time, city=:city, address=:address, imageURL=:imageURL, publicEvent=:publicEvent WHERE id=:id AND creator=:creator');
 
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->bindParam(':creator', $username, PDO::PARAM_STR);
@@ -74,7 +73,7 @@ function updateEvent($eventID, $username, $nameTag, $type, $description, $time, 
 }
 
 // delete the event with the given id from the database
-function deleteEvent($eventID, $username){
+function deleteEvent($id, $username){
 	global $db;
 
 	$stmt = $db->prepare('DELETE FROM Event WHERE id=:id');
@@ -113,12 +112,17 @@ function attendEvent($username, $eventID, $attend = false){
   	}
 }
 
-function getEvent($eventID){
+function getEvent($eventID, $username){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID');
-	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
+	if(!isset($username)){
+		$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID');
+	}else{
+		$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID AND creator = :username');
+		$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	}
+		$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
 
 	try{
    		$stmt->execute();
