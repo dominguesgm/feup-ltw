@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <h2>Login</h2>
+    <h2>Register</h2>
       <form class="register">
         <input name="username" type="text" placeholder="Username"/>
         <input name="password" type="password" placeholder="Password"/>

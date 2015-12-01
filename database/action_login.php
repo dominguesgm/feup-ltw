@@ -4,7 +4,7 @@
   if(isset($body)){
     $json = json_decode($body, true);
     if((isset($json['username'])) && (isset($json['password']))){
-      if(getUser($json['username'], $json['password'])){
+      if(authUser($json['username'], $json['password'])){
         $_SESSION['username'] = $json['username'];
         echo json_encode(array('success' => 'User signed in correctly'));
       } else echo json_encode(array('error' => "Username and password don't match"));
