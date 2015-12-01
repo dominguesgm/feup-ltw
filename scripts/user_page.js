@@ -38,13 +38,14 @@ function differentUser(data){
   $("#userHolder").html(divContent);
 }
 
+// Create page for the user currently signed in (extra edit button)
 function sameUser(data){
   var divContent = $("#userHolder").html() + "<h3>Name: " + data['name'] + "</h3>" +
                                               "<h3>City: " + data['city'] + "</h3>" +
                                               "<h3>Email: " + data['email'] + "</h3>";
   if(data["phoneNumber"] != "" && data['phoneNumber'] != null)
     divContent += "<h3>Phone Number: " + data['phoneNumber'] + "</h3>";
-  divContent += "<form method='post' action='edit_user.php'><input type='text' value='" + data['username'] + "' hidden><input value='Edit' type='submit'></form>";
+  divContent += "<form method='post' action='edit_user.php'><input name='username' type='text' value='" + data['username'] + "' hidden><input value='Edit' type='submit'></form>";
 
   $("#userHolder").html(divContent);
 }

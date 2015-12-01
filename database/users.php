@@ -21,14 +21,28 @@ function createUser($username, $password, $name, $city, $email, $phoneNumber){
   }
 }
 
-// update the user's information to the given parameters
-function updateUser($username, $password, $name, $city){
-	user('UPDATE', $username, $password, $name, $city);
-}
+function editUser($username, $name, $city, $email, $phoneNumber, $password){
+	global $db;
 
-// delete the user with the given username from the database
-function deleteUser($username, $password){
-	user('DELETE', $username, $password);
+	if($password == "")
+		$stmt = $db->prepare("UPDATE User SET name = :name , city = :city, email = :email, phoneNumber = :phoneNumber WHERE username = :username");
+	else{
+		$stmt = $db->prepare("UPDATE User SET name = :name , city = :city, email = :email, phoneNumber = :phoneNumber, password = :password WHERE username = :username");
+		$secure_password = hash("sha256", $password);
+		$stmt->bindParam(":password", $secure_password, PDO::PARAM_STR);
+	}
+	$stmt->bindParam(":username", $username, PDO::PARAM_STR);
+	$stmt->bindParam(":name", $name, PDO::PARAM_STR);
+	$stmt->bindParam(":city", $city, PDO::PARAM_STR);
+	$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+	$stmt->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_STR);
+
+	try{
+		$stmt->execute();
+		return true;
+	} catch(PDOException $e){
+		return false;
+	}
 }
 
 // Detects if user/password combination exists
@@ -80,38 +94,6 @@ function getUser($username){
 	} catch(PDOException $e){
 		return false;
 	}
-}
-
-// user operarions
-function user($operation, $username, $password, $name, $city){
-	global $db;
-	$secure_password = hash("sha256", $password);
-	switch($operation){
-		// create new user
-		case "CREATE":
-			$stmt = $db->prepare('INSERT INTO User(username, password, name, address, zipcode1, zipcode2)
-								values (:username, :password, :name, :address, :zip1, :zip2)');
-			break;
-		case 'UPDATE':
-			$stmt = $db->prepare('UPDATE User
-				SET password=:password, name=:name, address=:address, zipcode1=:zipcode1, zipcode2=:zipcode2
-				WHERE username = :username');
-			break;
-		case 'DELETE':
-			$stmt = $db->prepare('DELETE FROM User WHERE username=:username AND password=:password');
-			$stmt->bindParam(':username', $username, PDO::PARAM_STR);
-			$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
-			$stmt->execute();
-			return;
-		default:
-			return;
-	}
-
-	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
-	$stmt->bindParam(':password', $secure_password, PDO::PARAM_STR);
-	$stmt->bindParam(':name', $name, PDO::PARAM_STR);
-	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
-	$stmt->execute();
 }
 
 ?>

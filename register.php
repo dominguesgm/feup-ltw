@@ -11,6 +11,7 @@
       <form class="register">
         <input name="username" type="text" placeholder="Username"/>
         <input name="password" type="password" placeholder="Password"/>
+        <input name="passcheck" type="password" placeholder="Repeat Password" />
         <input name="email" type="email" placeholder="Email"/>
         <input name="fullName" type="text" placeholder="Name"/>
         <input name="phoneNumber" type="text" placeholder="Phone Number (optional)"/>

@@ -26,8 +26,7 @@ $("form.login").on('submit', function(e){
         window.location.replace("index.php");
     });
   }
-  // checks json input. check if success is set, or error is set
-  // redirect to index, with the cookie set in case of success
+  // TODO print error messages
 });
 
 $("form.register").on('submit', function(e){
@@ -37,6 +36,12 @@ $("form.register").on('submit', function(e){
   $('form input').each(function() {
       values[this.name] = $(this).val();
   });
+
+  if(values["password"] != values['passcheck']){
+    // TODO passwords do not match response
+    alert("Passwords do not match");
+    return;
+  }
 
   if(values["username"] != "" && values["password"] != "" && values["city"] != "" && values["name"] != "" && values["email"] != ""){
     $.ajax({
@@ -51,8 +56,5 @@ $("form.register").on('submit', function(e){
         window.location.replace("index.php");
     });
   }
-  // verify contents integrity
-  // send ajax to action_register.php
-  // checks json input. check if success is set, or error is set
-  // redirect to index, with the cookie set in case of success
+  // TODO print error messages
 });
