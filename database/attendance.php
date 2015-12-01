@@ -13,8 +13,6 @@ if(isset($body)){
   else
     $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) > datetime( :currentDate ) ORDER BY datetime(time) DESC");
 
-  $_SESSION['username'] = 'admin';
-
   $stmt->bindParam(":username", $_SESSION['username'], PDO::PARAM_STR);
   $stmt->bindParam(":currentDate", $currentDate, PDO::PARAM_STR);
 

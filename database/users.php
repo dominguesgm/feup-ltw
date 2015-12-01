@@ -32,7 +32,7 @@ function deleteUser($username, $password){
 }
 
 // Detects if user/password combination exists
-function getUser($username, $password){
+function authUser($username, $password){
 	global  $db;
 	$stmt = $db->prepare('SELECT username FROM User WHERE username = :username AND password = :password');
 
@@ -63,8 +63,23 @@ function userExists($username){
 			return false;
 		return true;
   } catch(PDOException $e) {
-    return true;
+    return "error";
   }
+}
+
+function getUser($username){
+	global $db;
+	$stmt = $db->prepare('SELECT username, city, name, phoneNumber, email FROM User WHERE username = :username');
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	try{
+		$stmt->execute();
+		$result = $stmt->fetch();
+		if($result['username'] != $username)
+			return false;
+		return $result;
+	} catch(PDOException $e){
+		return false;
+	}
 }
 
 // user operarions
