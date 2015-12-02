@@ -1,9 +1,9 @@
 <?php
-include_once('database/connection.php');
+include_once('connection.php');
 
 function addCommentToEvent($username, $eventID, $time, $commentContent){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('INSERT INTO Comment(id, username, eventID, time, commentContent) 
 								values (NULL, :username, :eventID, :time, :commentContent)');
@@ -16,7 +16,7 @@ function addCommentToEvent($username, $eventID, $time, $commentContent){
 
 function removeComment($commentId){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('DELETE FROM Comment WHERE id=:commentId');
 	$stmt->bindParam(':commentId', $commentId, PDO::PARAM_INT);
@@ -25,11 +25,12 @@ function removeComment($commentId){
 
 function getEventComments($eventID){
 	// open database
-	$db = openDB();
+	global $db;
 
 	$stmt = $db->prepare('SELECT * FROM Comment WHERE eventID=:eventID');
 	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
 	$stmt->execute();
+
 	return $stmt->fetchAll();
 }
 

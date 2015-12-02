@@ -45,18 +45,16 @@ function saveEvent(){
         datatype: "json",
         data: JSON.stringify(values)
       }).done(function(html){
-        console.log(html);
         var json = JSON.parse(html);
-        console.log(json);
         if("success" in json){
         	console.log('success');
-          window.location.replace("./?event=" + json['success']); 	// TODO change to redirect to event page
+          window.location.replace("event_item.php?id="+json['success']);
       	}else{
           console.log(json['error']);
         }
       });
     } else {
-      // TODO display error of impossible date
+      alert("Please check the date...");
     }
   }
   // verify contents integrity

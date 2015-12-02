@@ -76,7 +76,7 @@ function updateEvent($id, $username, $nameTag, $type, $description, $time, $city
 function deleteEvent($id, $username){
 	global $db;
 
-	$stmt = $db->prepare('DELETE FROM Event WHERE id=:id');
+	$stmt = $db->prepare('DELETE FROM Event WHERE id=:id AND creator=:creator');
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->bindParam(':creator', $username, PDO::PARAM_STR);
 
@@ -94,11 +94,10 @@ function attendEvent($username, $eventID, $attend = false){
 
 	if($attend){
 		// attend event
-		$stmt = $db->prepare('INSERT INTO Attending(username, eventID)
-							values (:username, :eventID)');
+		$stmt = $db->prepare('INSERT INTO Attending(username, eventId) values (:username, :eventID)');
 	}else{
 		// do not attend event
-		$stmt = $db->prepare('DELETE FROM Attending WHERE username=:username, username=:eventID');
+		$stmt = $db->prepare('DELETE FROM Attending WHERE username=:username AND eventId=:eventID');
 	}
 
 	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -112,17 +111,72 @@ function attendEvent($username, $eventID, $attend = false){
   	}
 }
 
-function getEvent($eventID, $username){
+function inviteToEvent($username, $eventID, $invite = false){
 	// open database
 	global $db;
 
-	if(!isset($username)){
-		$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID');
+	if($invite){
+		// attend event
+		$stmt = $db->prepare('INSERT INTO Invited(username, eventId) values (:username, :eventID)');
 	}else{
-		$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID AND creator = :username');
-		$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+		// do not attend event
+		$stmt = $db->prepare('DELETE FROM Invited WHERE username=:username AND eventId=:eventID');
 	}
-		$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
+
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
+
+	try{
+   		$stmt->execute();
+   		return true;
+  	} catch(PDOException $e) {
+    	return false;
+  	}
+}
+
+function isInvitedToEvent($username, $eventId){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT eventId FROM Invited WHERE username =:username AND eventId=:eventId');
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
+
+	try{
+   		$stmt->execute();
+   		$result = $stmt->fetchAll();
+
+		return count($result)!=0;
+  } catch(PDOException $e) {
+    	return false;
+  }
+}
+
+
+function isAttendingEvent($username, $eventId){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT eventId FROM Attending WHERE username =:username AND eventId=:eventId');
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
+
+	try{
+   		$stmt->execute();
+   		$result = $stmt->fetchAll();
+
+		return count($result)!=0;
+  } catch(PDOException $e) {
+    	return false;
+  }
+}
+
+function getEvent($eventID){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT * FROM  Event WHERE id = :eventID');
+	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
 
 	try{
    		$stmt->execute();
@@ -224,7 +278,7 @@ function getAttendingEvents($username){
 }
 
 // return events the user is attending
-function getHosttestEvents($maxEvents = 10){
+function getHottestEvents($maxEvents = 10){
 	// open database
 	global $db;
 

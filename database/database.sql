@@ -32,6 +32,13 @@ CREATE TABLE Attending(
 	PRIMARY KEY(username, eventId) 
 );
 
+DROP TABLE IF EXISTS Invited;
+CREATE TABLE Invited(
+	username TEXT REFERENCES User(username) ON DELETE CASCADE,
+	eventId INTEGER REFERENCES Event(id) ON DELETE CASCADE,
+	PRIMARY KEY(username, eventId) 
+);
+
 DROP TABLE IF EXISTS Comment;
 CREATE TABLE Comment(
 	id INTEGER PRIMARY KEY,

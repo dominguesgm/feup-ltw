@@ -27,10 +27,6 @@ function getFormInfo(){
   	});
 
   	values['type'] = $('form select').val();
-/*
-  	// debug
-  	for(v in values)
-  		console.log(v + ' -> ' + values[v]);*/
 
   	return values;
 }
@@ -55,7 +51,7 @@ function saveEvent(){
         console.log(json);
         if("success" in json){
         	console.log('success');
-          window.location.replace("./?event=" + json['success']); 	// TODO change to redirect to event page
+          window.location.replace("event_item.php?id="+json['success']);
       	}
       });
     } else {
