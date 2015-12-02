@@ -190,13 +190,16 @@ function getUserEvents($username){
   	}
 }
 
-// return user events
-function getEventsExcept($username){
+// Search for events related with the string var
+function getEventsSearch($var){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('SELECT * FROM  Event WHERE publicEvent = 1 AND creator != :username');
-	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	$var = '%' . $var . '%';
+
+	$stmt = $db->prepare('SELECT * FROM Event WHERE publicEvent = 1 AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
+
+	$stmt->bindParam(':var', $var, PDO::PARAM_STR);
 
 	try{
    		$stmt->execute();
@@ -207,31 +210,32 @@ function getEventsExcept($username){
 }
 
 // return events the user is attending
-function getAttendingEvents($username){
+function getLimitedUserAttendance($username, $maxEvents = 3){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('SELECT * FROM  Event
-						WHERE id in (SELECT eventID FROM Attending WHERE username=:username)');
-	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
-
-	try{
-   		$stmt->execute();
-   		return $stmt->fetchAll();
-  	} catch(PDOException $e) {
-    	return false;
-  	}
-}
-
-// return events the user is attending
-function getHosttestEvents($maxEvents = 10){
-	// open database
-	global $db;
-
-	$stmt = $db->prepare('SELECT * FROM  Event
-						WHERE id in (SELECT eventId FROM Attending ORDER BY COUNT(eventId) DESC LIMIT :maxEvents)');
+	$stmt = $db->prepare('SELECT * FROM  Event WHERE id in (SELECT eventId FROM Attending WHERE username = :username ORDER BY eventId DESC LIMIT :maxEvents)');
 
 	$stmt->bindParam(':maxEvents', $maxEvents, PDO::PARAM_INT);
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
+	try{
+   		$stmt->execute();
+   		return $stmt->fetchAll();
+  	} catch(PDOException $e) {
+    	return false;
+  	}
+}
+
+// return events the user is attending
+function getLimitedUserCreations($username, $maxEvents = 3){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT * FROM Event WHERE creator = :creator ORDER BY id DESC LIMIT :maxEvents');
+
+	$stmt->bindParam(':maxEvents', $maxEvents, PDO::PARAM_INT);
+	$stmt->bindParam(':creator', $username, PDO::PARAM_STR);
 
 	try{
    		$stmt->execute();
