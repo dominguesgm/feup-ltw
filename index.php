@@ -4,13 +4,13 @@
   include('templates/header.php');
 ?>
 <?php
-  if(isset($_GET['search'])){
+  if(isset($_GET['search']) && !isset($_GET['event']) && !isset($_GET['user'])){
     // In the case of a search
     //new function for events, get 10 events starting on result x
     ?><div id="listEvents" class="displayEvents">
-      <h2>Search Results</h2>
+      <h2>Search Results for '<?=$_GET['search']?>'</h2>
       <?php
-        include("events.php");
+        include("database/events.php");
         include_once("templates/display_event.php");
         $finalSearch = getEventsSearch($_GET['search']);    // print search result
         for($i = 0; $i < count($finalSearch); $i++){
@@ -20,7 +20,7 @@
     </div><?php
 
   } else {
-    if(isset($_GET['user'])){
+    if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
       // In the case of a user page
       ?><script type="text/javascript" src="scripts/user_page.js"></script>
       <div id="userPage">
@@ -30,7 +30,7 @@
       </div><?php
 
     } else {
-      if(isset($_GET['event'])){
+      if(isset($_GET['event']) && !isset($_GET['user']) && !isset($_GET['search'])){
         // In the case of an event page
         ?><script type="text/javascript" src="scripts/event_page.js"></script>
         <div id="eventHolder" class="contentHolder">
