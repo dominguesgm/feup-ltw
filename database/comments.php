@@ -5,13 +5,19 @@ function addCommentToEvent($username, $eventID, $time, $commentContent){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('INSERT INTO Comment(id, username, eventID, time, commentContent) 
+	$stmt = $db->prepare('INSERT INTO Comment(id, username, eventId, time, commentContent) 
 								values (NULL, :username, :eventID, :time, :commentContent)');
-	$stmt->bindParam(':time', $time, PDO::PARAM_STRING);
-	$stmt->bindParam(':commentContent', $commentContent, PDO::PARAM_STRING);
+	$stmt->bindParam(':time', $time, PDO::PARAM_STR);
+	$stmt->bindParam(':commentContent', $commentContent, PDO::PARAM_STR);
 	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
-	$stmt->bindParam(':username', $username, PDO::PARAM_STRING);
-	$stmt->execute();
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	
+	try{
+   		$stmt->execute();
+   		return true;
+  	} catch(PDOException $e) {
+    	return false;
+  	}
 }
 
 function removeComment($commentId){
@@ -20,7 +26,13 @@ function removeComment($commentId){
 
 	$stmt = $db->prepare('DELETE FROM Comment WHERE id=:commentId');
 	$stmt->bindParam(':commentId', $commentId, PDO::PARAM_INT);
-	$stmt->execute();
+	
+	try{
+   		$stmt->execute();
+   		return true;
+  	} catch(PDOException $e) {
+    	return false;
+  	}
 }
 
 function getEventComments($eventID){
@@ -31,7 +43,12 @@ function getEventComments($eventID){
 	$stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
 	$stmt->execute();
 
-	return $stmt->fetchAll();
+	try{
+   		$stmt->execute();
+   		return $stmt->fetchAll();
+  	} catch(PDOException $e) {
+    	return false;
+  	}
 }
 
 ?>

@@ -1,5 +1,24 @@
 var attending;
 
+function clearComment(comment){
+  // clear previous comment
+  $("textarea").val('');
+
+  // add new comment
+  var newComment = $("<div></div>");
+  newComment.className="comment";
+  var text = $("<p></p>").text(comment['username']);
+  text.className="text";
+  var author = $("<p></p>").text('Written by: ' + comment['username']);
+  author.className="author";
+  var time = $("<p></p>").text('Time: ' + comment['time']);
+  time.className="time";
+
+  newComment.append(text, author, time);
+
+  newComment.insertBefore($(".new_comment"));
+};
+
 function changeAttendanceButton(){
     if(!attending)
       $("#attendance").html('Attend');
@@ -35,9 +54,33 @@ function cancelEvent(username, eventId){
   });
 };
 
+function addCommentToEvent(username, eventId){
+
+  var comment = {};
+  comment['username']=username;
+  comment['eventId']=eventId;
+  comment['commentContent']=	$('textarea').val();
+  comment['time']= new Date();
+
+  console.log($('textarea').val());
+
+  $.ajax({
+    type: "post",
+    url: "database/action_new_comment.php",
+    datatype: "json",
+    data: JSON.stringify(comment)
+  }).done(function(html){
+    var jsonResponse;
+    console.log(html);
+    jsonResponse=JSON.parse(html);
+    if('success' in jsonResponse){
+      clearComment(comment);
+    }
+  });
+};
+
+
 function attend(username, eventId){
-  console.log(username);
-  console.log(eventId);
 
   if(attending==undefined){
     if($("#attendance").text()=='Do not attend')
