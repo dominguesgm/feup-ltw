@@ -48,7 +48,7 @@ function saveEvent(){
         var json = JSON.parse(html);
         if("success" in json){
         	console.log('success');
-          window.location.replace("event_item.php?id="+json['success']);
+          window.location.replace("./?event="+json['success']);
       	}else{
           console.log(json['error']);
         }

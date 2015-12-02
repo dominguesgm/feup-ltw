@@ -40,13 +40,16 @@
           $event = getEvent($_GET['event']);
           $comments = getEventComments($_GET['event']);
 
-          if (!$event) die();
-
-          if(!($event['publicEvent']==1 || $event['creator']==$_SESSION['username'] || isInvited($_SESSION['username'], $event['id'])))
-            die();
-
-          include_once("templates/view_event.php");
-          include_once("templates/list_comments.php");?>
+          if ($event){
+            if($event['publicEvent']==1 || $event['creator']==$_SESSION['username'] || isInvited($_SESSION['username'], $event['id'])){
+              include_once("templates/view_event.php");
+              include_once("templates/list_comments.php");
+            } else {
+              echo "<p>You do not have permission to view this event.</p>";
+            }
+          } else {
+            echo "<p>The event you're looking for does not exist.</p>";
+          }?>
         </div><?php
 
       } else {?>
