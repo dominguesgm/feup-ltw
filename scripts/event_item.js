@@ -4,6 +4,8 @@ function clearComment(comment){
   // clear previous comment
   $("textarea").val('');
 
+  $("#comments .noComments").remove();
+
   // add new comment
   var newComment = $("<div></div>");
   newComment.className="comment";
