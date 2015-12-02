@@ -29,14 +29,14 @@ DROP TABLE IF EXISTS Attending;
 CREATE TABLE Attending(
 	username TEXT REFERENCES User(username) ON DELETE CASCADE,
 	eventId INTEGER REFERENCES Event(id) ON DELETE CASCADE,
-	PRIMARY KEY(username, eventId) 
+	PRIMARY KEY(username, eventId)
 );
 
 DROP TABLE IF EXISTS Invited;
 CREATE TABLE Invited(
 	username TEXT REFERENCES User(username) ON DELETE CASCADE,
 	eventId INTEGER REFERENCES Event(id) ON DELETE CASCADE,
-	PRIMARY KEY(username, eventId) 
+	PRIMARY KEY(username, eventId)
 );
 
 DROP TABLE IF EXISTS Comment;
@@ -52,6 +52,27 @@ DROP TABLE IF EXISTS EventType;
 CREATE TABLE EventType(
 	eventType TEXT PRIMARY KEY
 );
+
+DROP TRIGGER IF EXISTS DeleteUser;
+CREATE TRIGGER DeleteUser
+AFTER DELETE ON User
+FOR EACH ROW
+BEGIN
+DELETE FROM Event WHERE creator=OLD.username;
+DELETE FROM Invited WHERE username=OLD.username;
+DELETE FROM Attending WHERE username=OLD.username;
+DELETE FROM Comment WHERE username=OLD.username;
+END;
+
+DROP TRIGGER IF EXISTS CancelEvent;
+CREATE TRIGGER CancelEvent
+AFTER DELETE ON Event
+FOR EACH ROW
+BEGIN
+DELETE FROM Invited WHERE eventId=OLD.id;
+DELETE FROM Attending WHERE eventId=OLD.id;
+DELETE FROM Comment WHERE eventId=OLD.id;
+END;
 
 INSERT INTO EventType(eventType) values ('Award ceremony');
 INSERT INTO EventType(eventType) values ('Birthday');
