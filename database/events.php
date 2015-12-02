@@ -146,7 +146,7 @@ function isInvitedToEvent($username, $eventId){
    		$stmt->execute();
    		$result = $stmt->fetchAll();
 
-		return count($result)!=0;
+			return count($result)!=0;
   } catch(PDOException $e) {
     	return false;
   }

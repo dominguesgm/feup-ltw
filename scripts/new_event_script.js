@@ -51,11 +51,11 @@ function saveEvent(){
         console.log(json);
         if("success" in json){
         	console.log('success');
-          window.location.replace("event_item.php?id="+json['success']);
+          window.location.replace("./?event="+json['success']);
       	}
       });
     } else {
-      // TODO display error of impossible date
+      alert("Please check the date...");
     }
   }
   // verify contents integrity

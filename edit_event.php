@@ -4,7 +4,7 @@
   include_once('templates/header.php');
 
   include_once('database/events.php');
-  $event = getEvent($_GET['id'], $_SESSION['username']);
+  $event = getEvent($_POST['id'], $_SESSION['username']);
 
   if (!$event) die();
 
