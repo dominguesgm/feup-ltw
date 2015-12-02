@@ -17,7 +17,7 @@
     die();
 
   include_once("templates/view_event.php");
-  include_once("templates/list_comments.php");
+  include_once("templates/list_comments.php");  
   include_once('templates/footer.php');
 ?>
   </body>
