@@ -5,10 +5,12 @@ function clearComment(comment){
   // clear previous comment
   $("textarea").val('');
 
+  $("#comments .noComments").remove();
+
   // add new comment
   var newComment = $("<div></div>");
   newComment.className="comment";
-  var text = $("<p></p>").text(comment['username']);
+  var text = $("<p></p>").text(comment['commentContent']);
   text.className="text";
   var author = $("<p></p>").text('Written by: ' + comment['username']);
   author.className="author";
@@ -17,7 +19,7 @@ function clearComment(comment){
 
   newComment.append(text, author, time);
 
-  newComment.insertBefore($(".new_comment"));
+  $("#comments").append(newComment);
 };
 
 function changeAttendanceButton(){

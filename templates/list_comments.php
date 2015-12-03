@@ -8,9 +8,9 @@
           <div class="time">Time: <?=$comment['time']?></div><br />
         </div>
         <?php } if(count($comments)==0){ ?>
-          <p>No comments so far...</p>
+          <p class="noComments">No comments so far...</p>
+          <?php } ?>
   </div>
-  <?php } ?>
       <div id="new_comment">
           <textarea name="commentContent"  placeholder="Leave a comment..." /></textarea>
           <br>
