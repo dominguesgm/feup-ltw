@@ -28,12 +28,18 @@ function changeAttendanceButton(){
     else $("#attendance").html('Do not attend');
 };
 
-function inviteToEvent(eventId){
+function inviteToEvent(){
   if(invite == false){
     invite = true;
     $('button#invite').before('<input type="text" id="userInvite" placeholder="Username">');
+    $("input#userInvite").keyup(function(event){
+      if(event.keyCode == 13)
+        inviteToEvent();
+    });
   } else {
+    var eventId = $("button#invite").data("event");
     var invitedUser = $("input#userInvite").val();
+    $("#inviteWarning").html('');
     if(invitedUser != ""){
       $.ajax({
         type: "post",
@@ -44,7 +50,7 @@ function inviteToEvent(eventId){
         console.log(html);
         jsonResponse=JSON.parse(html);
         if('success' in jsonResponse){
-          $("ul#usersInvited").append("<li user='" + invitedUser + "'>"+invitedUser+' <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>');
+          $("ul#usersInvited").append("<li data-user='" + invitedUser + "' data-event='" + eventId + "'><a href='./?user="+invitedUser+ "'>" + invitedUser + '</a> <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>');
           $("img.removeInvite").on("click", removeInvite);
         } else {
           $("#inviteWarning").html(jsonResponse['error']);
@@ -120,7 +126,7 @@ function attend(username, eventId){
 
   $.ajax({
     type: "post",
-    url: "database/action_attendance.php",
+    url: "database/action_attend.php",
     datatype: "json",
     data: JSON.stringify(attendanceRequest)
   }).done(function(html){
@@ -153,7 +159,30 @@ function removeInvite(){
   });
 }
 
+function showAttendance(){
+  var eventId = $('button#showAttendance').data("event");
+  $.ajax({
+    type: "post",
+    url: "database/action_list_attendance.php",
+    data: JSON.stringify({'eventId': eventId})
+  }).done(function(html){
+    var jsonResponse;
+    console.log(html);
+    jsonResponse=JSON.parse(html);
+    if('success' in jsonResponse){
+      var generatedHtml = "";
+      if(jsonResponse['success'].length > 0){
+        for(var i = 0; i < jsonResponse['success'].length; i++){
+          generatedHtml += "<li><a href='./?user=" + jsonResponse['success'][i]['username'] + "'>" + jsonResponse['success'][i]['username'] + '</a></li>';
+        }
+      } else generatedHtml = '<p>No users signed up for this event yet.</p>';
+      $('button#showAttendance').parent().html(generatedHtml);
+    }
+  });
+}
+
 $("img.removeInvite").on("click", removeInvite);
 $('button#showAttendance').on("click", function(){
-  console.log("pressed");
+  showAttendance();
 });
+$("button#invite").on("click", inviteToEvent);
