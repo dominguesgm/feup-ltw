@@ -9,6 +9,7 @@
   include_once('database/comments.php');
 
   $event = getEvent($_GET['id']);
+  $invites = invitesForEvent($_GET['id']);
   $comments = getEventComments($_GET['id']);
 
   if (!$event) die();
@@ -17,7 +18,7 @@
     die();
 
   include_once("templates/view_event.php");
-  include_once("templates/list_comments.php");  
+  include_once("templates/list_comments.php");
   include_once('templates/footer.php');
 ?>
   </body>

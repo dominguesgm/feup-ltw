@@ -152,6 +152,21 @@ function isInvitedToEvent($username, $eventId){
   }
 }
 
+function invitesForEvent($eventId){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT username FROM Invited WHERE eventId=:eventId');
+	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
+
+	try{
+   		$stmt->execute();
+   		$result = $stmt->fetchAll();
+			return $result;
+  } catch(PDOException $e) {
+    	return false;
+  }
+}
 
 function isAttendingEvent($username, $eventId){
 	// open database
@@ -245,19 +260,23 @@ function getUserEvents($username){
 }
 
 // Search for events related with the string var
-function getEventsSearch($var){
+function getEventsSearch($var, $username){
 	// open database
 	global $db;
 
 	$var = '%' . $var . '%';
 
-	$stmt = $db->prepare('SELECT * FROM Event WHERE publicEvent = 1 AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
+	$stmt1 = $db->prepare('SELECT * FROM Event, Invited WHERE username = :username AND eventId = id AND publicEvent = 0 AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
+	$stmt2 = $db->prepare('SELECT * FROM Event WHERE (publicEvent = 1) AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
 
-	$stmt->bindParam(':var', $var, PDO::PARAM_STR);
+	$stmt1->bindParam(':var', $var, PDO::PARAM_STR);
+	$stmt1->bindParam(':username', $username, PDO::PARAM_STR);
+	$stmt2->bindParam(':var', $var, PDO::PARAM_STR);
 
 	try{
-   		$stmt->execute();
-   		return $stmt->fetchAll();
+   		$stmt1->execute();
+			$stmt2->execute();
+   		return array_merge($stmt1->fetchAll(), $stmt2->fetchAll());
   	} catch(PDOException $e) {
     	return false;
   	}
@@ -281,4 +300,20 @@ function getLimitedUserAttendance($username, $maxEvents = 3){
   	}
 }
 
+// Check if event exists
+function eventExists($eventsId){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT * FROM Event WHERE id = :eventsId');
+
+	$stmt->bindParam(':eventsId', $eventsId, PDO::PARAM_INT);
+
+	try{
+   		$stmt->execute();
+   		return count($stmt->fetchAll()) != 0;
+  	} catch(PDOException $e) {
+    	return false;
+  	}
+}
 ?>

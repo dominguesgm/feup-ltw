@@ -5,20 +5,32 @@
   <h4>Where: <?=$event['city']?></h4>
   <?php if($event['address'] != ""){?><h4>Where exactly: <?=$event['address']?></h4><?php } ?>
   <img src="<?=$event['imageURL']?>" alt="300x200">
-  <h4><?=$event['description']?></h4>
-  <ul>
+  <p>Description: <?=$event['description']?></p>
+
     <?php
       if(isset($_SESSION['username'])) {
         if($event['creator']==$_SESSION['username']) { ?>
+          <div class="warning" id="inviteWarning"></div>
+          <button id="invite" type="button" onclick="inviteToEvent(<?=$event['id']?>)">Send invites</button>
           <form action="edit_event.php" method="post">
-            <button id="invite" type="button" onclick="inviteToEvent(<?=$event['id']?>)">Send invites</button>
             <input type="text" name="id" value="<?=$event['id']?>" hidden readonly>
             <input id="edit" type="submit" value="Edit">
-            <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>)">Cancel</button>
           </form>
+          <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>)">Cancel</button>
+          <h4>Users Invited: </h4>
+          <ul id="usersInvited">
+            <?php for($i = 0; $i < count($invites); $i++){
+                    echo '<li data-user="' . $invites[$i]['username'] . '" data-event="' . $event['id'] . '">' . $invites[$i]['username'] . ' <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>';
+            }?>
+          </ul>
     <?php } else { if(!isAttendingEvent($_SESSION['username'], $event['id'])) {?>
         <button id="attendance" type="button" onclick="attend('<?=$_SESSION['username']?>', <?=$event['id']?>)">Attend</button>
     <?php } else {?>
         <button id="attendance" type="button" onclick="attend('<?=$_SESSION['username']?>', <?=$event['id']?>)">Do not attend</button> <?php } } }?>
-  </ul>
+
+        <h4>Users Going: </h4>
+        <ul id="attendance">
+          <button id="showAttendance">Show Attendance</button>
+        </ul>
+
 </div>

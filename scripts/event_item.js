@@ -1,4 +1,5 @@
 var attending;
+var invite = false;
 
 function clearComment(comment){
   // clear previous comment
@@ -26,7 +27,29 @@ function changeAttendanceButton(){
 };
 
 function inviteToEvent(eventId){
-  // TODO redirect to event's page
+  if(invite == false){
+    invite = true;
+    $('button#invite').before('<input type="text" id="userInvite" placeholder="Username">');
+  } else {
+    var invitedUser = $("input#userInvite").val();
+    if(invitedUser != ""){
+      $.ajax({
+        type: "post",
+        url: "database/action_invite.php",
+        data: JSON.stringify({'username': invitedUser, 'eventId': eventId})
+      }).done(function(html){
+        var jsonResponse;
+        console.log(html);
+        jsonResponse=JSON.parse(html);
+        if('success' in jsonResponse){
+          $("ul#usersInvited").append("<li user='" + invitedUser + "'>"+invitedUser+' <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>');
+          $("img.removeInvite").on("click", removeInvite);
+        } else {
+          $("#inviteWarning").html(jsonResponse['error']);
+        }
+      });
+    } else alert("Please write the username you want to invite");
+  }
 };
 
 function editEvent(eventId){
@@ -109,3 +132,26 @@ function attend(username, eventId){
     }
   });
 };
+
+function removeInvite(){
+  var invitedUser = $(this).parent().data("user");
+  var eventId = $(this).parent().data("event");
+  var liToDelete = $(this).closest('li');
+  $.ajax({
+    type: "post",
+    url: "database/action_remove_invite.php",
+    data: JSON.stringify({'username': invitedUser, 'eventId': eventId})
+  }).done(function(html){
+    var jsonResponse;
+    console.log(html);
+    jsonResponse=JSON.parse(html);
+    if('success' in jsonResponse){
+      liToDelete.remove();
+    }
+  });
+}
+
+$("img.removeInvite").on("click", removeInvite);
+$('button#showAttendance').on("click", function(){
+  console.log("pressed");
+});

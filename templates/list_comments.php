@@ -1,11 +1,11 @@
 <div class="comments">
-  <h3>Comments</h3>
+  <h3>Comments:</h3>
   <div class="comments">
     <?php foreach ($comments as $comment) { ?>
         <div class="comment">
           <p class="text"><?=$comment['commentContent']?></p>
-          <p class="author">Written by: <?=$comment['username']?></p>
-          <p class="time">Time: <?=$comment['time']?></p>
+          <div class="author">Written by: <?=$comment['username']?></div><br />
+          <div class="time">Time: <?=$comment['time']?></div><br />
         </div>
         <?php } if(count($comments)==0){ ?>
           <p>No comments so far...</p>

@@ -12,7 +12,7 @@
       <?php
         include("database/events.php");
         include_once("templates/display_event.php");
-        $finalSearch = getEventsSearch($_GET['search']);    // print search result
+        $finalSearch = getEventsSearch($_GET['search'], $_SESSION['username']);    // print search result
         for($i = 0; $i < count($finalSearch); $i++){
           displaySmallEvent($finalSearch[$i]);
         }
@@ -32,16 +32,18 @@
     } else {
       if(isset($_GET['event']) && !isset($_GET['user']) && !isset($_GET['search'])){
         // In the case of an event page
-        ?><script type="text/javascript" src="scripts/event_item.js"></script>
+        ?>
         <div id="eventHolder" class="contentHolder"><?php
           include_once('database/events.php');
           include_once('database/comments.php');
 
           $event = getEvent($_GET['event']);
-          $comments = getEventComments($_GET['event']);
 
           if ($event){
-            if($event['publicEvent']==1 || $event['creator']==$_SESSION['username'] || isInvited($_SESSION['username'], $event['id'])){
+            if($event['publicEvent']==1 || $event['creator']==$_SESSION['username'] || isInvitedToEvent($_SESSION['username'], $event['id'])){
+              $invites = invitesForEvent($_GET['event']);
+              $comments = getEventComments($_GET['event']);
+
               include_once("templates/view_event.php");
               include_once("templates/list_comments.php");
             } else {
@@ -50,7 +52,8 @@
           } else {
             echo "<p>The event you're looking for does not exist.</p>";
           }?>
-        </div><?php
+        </div>
+        <script type="text/javascript" src="scripts/event_item.js"></script><?php
 
       } else {?>
         <div id="attending" class="displayEvents">
