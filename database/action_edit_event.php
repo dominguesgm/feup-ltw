@@ -13,9 +13,7 @@
 	    	&& (isset($json['time'])) && (isset($json['city'])) && (isset($json['address']))
 	    	&& (isset($json['imageURL'])) && (isset($json['publicEvent']))) {
 
-	     	$success = updateEvent($json['id'], $_SESSION['username'], $json['nameTag'],
-						     		$json['type'], $json['description'], $json['time'],
-						     			$json['city'], $json['address'], $json['imageURL'], $json['publicEvent']);
+	     	   $success = updateEvent($json['id'], $_SESSION['username'], $json['nameTag'], $json['type'], $json['description'], $json['time'], $json['city'], $json['address'], $json['publicEvent'], $json['imageURL']);
 
 		        if($success)
 		        	echo json_encode(array('success' => $json['id']));

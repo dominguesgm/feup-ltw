@@ -1,7 +1,6 @@
 
 function loadEventTypes(){
   $.getJSON("database/event_types.php", function(result){
-    console.log($("#new_event"));
           $.each(result, function(key, eventType){
               var option = $("<option></option>");
               option.text(eventType);
@@ -48,10 +47,10 @@ function saveEvent(){
       }).done(function(html){
         console.log(html);
         var json = JSON.parse(html);
-        console.log(json);
         if("success" in json){
-        	console.log('success');
-          window.location.replace("./?event="+json['success']);
+          $("[name=id]").val(json['success']);
+          document.new_event.submit();
+          //window.location.replace("./?event="+json['success']);
       	}
       });
     } else {

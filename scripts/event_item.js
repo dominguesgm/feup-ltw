@@ -5,7 +5,7 @@ function clearComment(comment){
   // clear previous comment
   $("textarea").val('');
 
-  $("#comments .noComments").remove();
+  $(".noComments").remove();
 
   // add new comment
   var newComment = $("<div></div>");
@@ -19,7 +19,7 @@ function clearComment(comment){
 
   newComment.append(text, author, time);
 
-  $("#comments").append(newComment);
+  $(".commentList").append(newComment);
 };
 
 function changeAttendanceButton(){
@@ -58,10 +58,11 @@ function editEvent(eventId){
     window.location.replace("edit_event.php?id="+eventId);
 };
 
-function cancelEvent(username, eventId){
+function cancelEvent(username, eventId, imageURL){
   var data = {};
   data['username']=username;
   data['eventId']=eventId;
+  data['deleteResources']= (imageURL != 'default.jpg');
 
   $.ajax({
     type: "post",
@@ -69,6 +70,7 @@ function cancelEvent(username, eventId){
     datatype: "json",
     data: JSON.stringify(data)
   }).done(function(html){
+    console.log(html);
     var jsonResponse;
     jsonResponse=JSON.parse(html);
 
@@ -80,6 +82,9 @@ function cancelEvent(username, eventId){
 };
 
 function addCommentToEvent(username, eventId){
+
+  if($('textarea').val()=="")
+    return null;
 
   var comment = {};
   comment['username']=username;
