@@ -3,15 +3,18 @@
   $body = file_get_contents('php://input');
   if(isset($body)){
     $json = json_decode($body, true);
-    if(isset($json['username'])){
+    if(isset($json['attendance'])){
       $result = array();
-
-      $result['attendance'] = getLimitedUserAttendance($json['username'], 3);
-
-      $result['creations'] = getLimitedUserCreations($json['username'], 3);
-
+      $result['attendance'] = getLimitedUserAttendance($json['attendance'], -1, 3);
       echo json_encode($result);
       return;
+    } else {
+      if(isset($json['creations'])){
+        $result = array();
+        $result['creations'] = getLimitedUserCreations($json['creations'], -1, 3);
+        echo json_encode($result);
+        return;
+      }
     }
   }
   echo json_encode(array("error" => "while generating events"));

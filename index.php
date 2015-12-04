@@ -23,8 +23,10 @@
     if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
       // In the case of a user page
       ?><div id="userPage">
-        <div id="userHolder" class="contentHolder">
-          <h2><?php echo $_GET['user'] ?></h2>
+        <div id="userHolder" class="contentHolder" data-user="<?=$_GET['user']?>">
+          <?php include_once("database/user_data.php");
+              include_once("database/events.php");
+              include_once("templates/user_page.php");?>
         </div>
       </div><script type="text/javascript" src="scripts/user_page.js"></script><?php
 
