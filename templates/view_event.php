@@ -16,7 +16,7 @@
             <input type="text" name="id" value="<?=$event['id']?>" hidden readonly>
             <input id="edit" type="submit" value="Edit">
           </form>
-          <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>)">Cancel</button>
+          <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>, '<?=$event['imageURL']?>')">Cancel</button>
           <h4>Users Invited: </h4>
           <ul id="usersInvited">
             <?php for($i = 0; $i < count($invites); $i++){

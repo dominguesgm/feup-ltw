@@ -20,7 +20,7 @@ CREATE TABLE Event(
 	time TEXT NOT NULL,
 	city TEXT NOT NULL,
 	address TEXT,
-	imageURL TEXT NOT NULL,
+	imageURL TEXT,
 	publicEvent INTEGER NOT NULL,
 	CONSTRAINT ck_public CHECK (publicEvent = 0 OR publicEvent = 1)
 );
@@ -73,6 +73,15 @@ DELETE FROM Invited WHERE eventId=OLD.id;
 DELETE FROM Attending WHERE eventId=OLD.id;
 DELETE FROM Comment WHERE eventId=OLD.id;
 END;
+
+DROP TRIGGER IF EXISTS UnInvinte;
+CREATE TRIGGER UnInvite
+AFTER DELETE ON Invited
+FOR EACH ROW
+BEGIN
+DELETE FROM Attending WHERE username=OLD.username AND eventId=OLD.eventId;
+END;
+
 
 INSERT INTO EventType(eventType) values ('Award ceremony');
 INSERT INTO EventType(eventType) values ('Birthday');

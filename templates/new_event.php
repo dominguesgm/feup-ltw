@@ -1,4 +1,5 @@
-<form id="new_event" action="database/action_new_event.php" method="post">
+<form name="new_event" id="new_event" action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" />
     <label> Tag </label>
     <input type="text" name="nameTag" placeholder="Event tag" required />
       <br>
@@ -17,8 +18,8 @@
     <label> Address  </label>
     <input type="text" name="address" placeholder="Address" />
       <br>
-    <label> Image  </label>
-    <input type="text" name="imageURL" placeholder="Image URL" />
+    <label> Image </label>
+    <input type="file" name="imageURL">
       <br>
     <label> Public event </label>
     <input type="checkbox" name="publicEvent" checked /><br>

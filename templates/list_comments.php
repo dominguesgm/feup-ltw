@@ -1,6 +1,6 @@
 <div class="comments">
   <h3>Comments:</h3>
-  <div class="comments">
+  <div class="commentList">
     <?php foreach ($comments as $comment) { ?>
         <div class="comment">
           <p class="text"><?=$comment['commentContent']?></p>

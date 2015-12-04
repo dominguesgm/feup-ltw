@@ -15,7 +15,7 @@
 
 	     	$eventId = createEvent($_SESSION['username'], $json['nameTag'],
 						     		$json['type'], $json['description'], $json['time'],
-						     			$json['city'], $json['address'], $json['imageURL'], $json['publicEvent']);
+						     			$json['city'], $json['address'], $json['publicEvent'], $json['imageURL']);
 
 		        if($eventId!=-1)
 		        	echo json_encode(array('success' => $eventId));

@@ -2,12 +2,12 @@
 include_once('connection.php');
 
 // add event to Events database and to user's list of events
-function createEvent($username, $nameTag, $type, $description, $time, $city, $address, $imageURL, $publicEvent){
+function createEvent($username, $nameTag, $type, $description, $time, $city, $address, $publicEvent, $imageURL){
 	global $db;
 
 	// create event
-	$stmt = $db->prepare('INSERT INTO Event(id, creator, nameTag, type, description, time, city, address, imageURL, publicEvent)
-								values (NULL, :creator, :nameTag, :type, :description, :time, :city, :address, :imageURL, :publicEvent)');
+	$stmt = $db->prepare('INSERT INTO Event(id, creator, nameTag, type, description, time, city, address, publicEvent)
+								values (NULL, :creator, :nameTag, :type, :description, :time, :city, :address, :publicEvent)');
 
 	$stmt->bindParam(':creator', $username, PDO::PARAM_STR);
 	$stmt->bindParam(':nameTag', $nameTag, PDO::PARAM_STR);
@@ -16,7 +16,6 @@ function createEvent($username, $nameTag, $type, $description, $time, $city, $ad
 	$stmt->bindParam(':time', $time, PDO::PARAM_STR);
 	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
 	$stmt->bindParam(':address', $address, PDO::PARAM_STR);
-	$stmt->bindParam(':imageURL', $imageURL, PDO::PARAM_STR);
 	$stmt->bindParam(':publicEvent', $publicEvent, PDO::PARAM_STR);
 
 	try{
@@ -35,24 +34,38 @@ function createEvent($username, $nameTag, $type, $description, $time, $city, $ad
   	return -2;
   }
 
-	$stmt = $db->prepare('INSERT INTO Attending (username, eventId) values (:username, :eventId)');
+	if($imageURL=="")
+		$imageURL="default.jpg";
+	else $imageURL=$eventId . ".jpg";
+	$stmt = $db->prepare('UPDATE Event SET imageURL=:imageURL WHERE id=:id');
+	$stmt->bindParam(':imageURL', $imageURL, PDO::PARAM_STR);
+	$stmt->bindParam(':id', $eventId, PDO::PARAM_STR);
+	try{
+  	$stmt->execute();
+  } catch(PDOException $e) {
+  	return -3;
+  }
 
+	$stmt = $db->prepare('INSERT INTO Attending (username, eventId) values (:username, :eventId)');
 	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
 	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_STR);
 	try{
  		$stmt->execute();
 		return $eventId;
 	} catch(PDOException $e) {
-  	return -3;
+  	return -4;
 	}
 }
 
 // updates the event's information to the given parameters
-function updateEvent($id, $username, $nameTag, $type, $description, $time, $city, $address, $imageURL, $publicEvent){
+function updateEvent($id, $username, $nameTag, $type, $description, $time, $city, $address, $publicEvent, $imageURL){
 	global $db;
 
+if($imageURL!=""){
 	$stmt = $db->prepare('UPDATE Event SET nameTag=:nameTag, type=:type, description=:description, time=:time, city=:city, address=:address, imageURL=:imageURL, publicEvent=:publicEvent WHERE id=:id AND creator=:creator');
-
+	$imageURL=$id . ".jpg";
+	$stmt->bindParam(':imageURL', $imageURL, PDO::PARAM_STR);
+}else $stmt = $db->prepare('UPDATE Event SET nameTag=:nameTag, type=:type, description=:description, time=:time, city=:city, address=:address, publicEvent=:publicEvent WHERE id=:id AND creator=:creator');
 	$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 	$stmt->bindParam(':creator', $username, PDO::PARAM_STR);
 	$stmt->bindParam(':nameTag', $nameTag, PDO::PARAM_STR);
@@ -61,7 +74,6 @@ function updateEvent($id, $username, $nameTag, $type, $description, $time, $city
 	$stmt->bindParam(':time', $time, PDO::PARAM_STR);
 	$stmt->bindParam(':city', $city, PDO::PARAM_STR);
 	$stmt->bindParam(':address', $address, PDO::PARAM_STR);
-	$stmt->bindParam(':imageURL', $imageURL, PDO::PARAM_STR);
 	$stmt->bindParam(':publicEvent', $publicEvent, PDO::PARAM_STR);
 
 	try{

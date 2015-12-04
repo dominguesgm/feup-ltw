@@ -1,4 +1,4 @@
-<form id="edit_event" action="database/action_edit_event.php" method="post">
+<form name="edit_event" id="edit_event" action="upload.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?=$event['id']?>" />
     <label> Tag </label>
     <input type="text" name="nameTag" placeholder="Event tag" value = "<?=$event['nameTag']?>" required />
@@ -18,8 +18,8 @@
     <label> Address  </label>
     <input type="text" name="address" value = "<?=$event['address']?>" placeholder="Address" />
       <br>
-    <label> Image  </label>
-    <input type="text" name="imageURL" value = "<?=$event['imageURL']?>" placeholder="Image URL" />
+    <label> New image </label>
+      <input type="file" name="imageURL">
       <br>
     <label> Public event </label>
     <input type="checkbox" name="publicEvent" <?php if($event['publicEvent']) echo 'checked' ?> /><br>

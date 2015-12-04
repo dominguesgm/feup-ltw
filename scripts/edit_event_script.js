@@ -38,6 +38,7 @@ function saveEvent(){
   if(values['type'] != "" && values['nameTag'] && values['description'] != "" && values['city'] != "" && values['time'] != ""){
     var currentDate = new Date();
     var eventDate = new Date(values['time']);
+
     if(currentDate < eventDate){
       $.ajax({
         type: "post",
@@ -45,10 +46,11 @@ function saveEvent(){
         datatype: "json",
         data: JSON.stringify(values)
       }).done(function(html){
+        console.log(html);
         var json = JSON.parse(html);
         if("success" in json){
-        	console.log('success');
-          window.location.replace("./?event="+json['success']);
+          document.edit_event.submit();
+          //window.location.replace("./?event="+json['success']);
       	}else{
           console.log(json['error']);
         }

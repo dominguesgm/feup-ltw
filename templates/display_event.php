@@ -9,10 +9,10 @@ function displaySmallEvent($data){
   if($data['address'] != "")
     echo '<h6>Where exactly: ' . $data['address'] . '</h6>';
 
-    echo '<p>Description: ' . $data['description'] . '</p>';
+  echo '<p>Description: ' . $data['description'] . '</p>';
 
-  if($data['imageURL'] != "")
-    echo '<img src="' . $data['imageURL'] . '">';
+  echo '<img src="images/thumbs_small/' . $data['imageURL'] . '.jpg" width="200" height="200">';
+
   echo '</div>';
 }
 ?>

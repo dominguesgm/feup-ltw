@@ -9,13 +9,21 @@
   	if(isset($body)){
   	  $json = json_decode($body, true);
 
-	   if(isset($json['eventId'])) {
-    
+	   if(isset($json['eventId']) && isset($json['deleteResources'])) {
+
+			 	// delete event from database
   	  	$success = deleteEvent($json['eventId'], $_SESSION['username']);
 
+				// delete event resources
+				if($json['deleteResources']){
+					unlink("../images/originals/" . $json['eventId'] . ".jpg");
+					unlink("../images/thumbs_small/" . $json['eventId'] . ".jpg");
+					unlink("../images/thumbs_medium/" . $json['eventId'] . ".jpg");
+				}
+				
 		        if($success)
 		        	echo json_encode(array('success' => 'success'));
-		        else echo json_encode(array('error' => "Problem attending event"));
+		        else echo json_encode(array('error' => "Problem cancelling event"));
 
 		    }else echo json_encode(array('error' => "Request fields came empty"));
 
