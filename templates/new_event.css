@@ -1,0 +1,19 @@
+html, body {
+  margin: 0em;
+  padding: 0em;
+  background-color: #00B098;
+}
+
+div#new_event_form {
+  position:relative;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  width:  50%;
+  font-family: "Helvetica", sans-serif;
+}
+
+form#new_event {
+  position:absolute;
+}

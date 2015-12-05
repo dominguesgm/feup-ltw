@@ -22,11 +22,12 @@
   } else {
     if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
       // In the case of a user page
-      ?><div id="userPage">
+      ?><script type="text/javascript" src="scripts/user_page.js"></script>
+      <div id="userPage">
         <div id="userHolder" class="contentHolder">
           <h2><?php echo $_GET['user'] ?></h2>
         </div>
-      </div><script type="text/javascript" src="scripts/user_page.js"></script><?php
+      </div><?php
 
     } else {
       if(isset($_GET['event']) && !isset($_GET['user']) && !isset($_GET['search'])){
