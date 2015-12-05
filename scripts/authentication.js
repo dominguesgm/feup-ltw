@@ -24,6 +24,10 @@ $("form.login").on('submit', function(e){
       var json = JSON.parse(html);
       if("success" in json)
         window.location.replace("index.php");
+      else {
+        if("error" in json)
+          $("div#error").html(json['error']);
+      }
     });
   }
   // TODO print error messages
@@ -37,13 +41,12 @@ $("form.register").on('submit', function(e){
       values[this.name] = $(this).val();
   });
 
-  if(values["password"] != values['passcheck']){
-    // TODO passwords do not match response
-    alert("Passwords do not match");
-    return;
-  }
-
   if(values["username"] != "" && values["password"] != "" && values["city"] != "" && values["name"] != "" && values["email"] != ""){
+    if(values["password"] != values['passcheck']){
+      // TODO passwords do not match response
+      $("div#error").html("Passwords do not match");
+      return;
+    }
     $.ajax({
       type: "post",
       url: "database/action_register.php",
@@ -54,7 +57,11 @@ $("form.register").on('submit', function(e){
       var json = JSON.parse(html);
       if("success" in json)
         window.location.replace("index.php");
+      if("error" in json)
+        $("div#error").html(json['error']);
     });
+  } else {
+    $("div#error").html("Elements with an * in front are required");
   }
   // TODO print error messages
 });

@@ -8,7 +8,7 @@
     // In the case of a search
     //new function for events, get 10 events starting on result x
     ?><div id="listEvents" class="displayEvents">
-      <h2>Search Results for '<?=$_GET['search']?>'</h2>
+      <h2>Search results for '<?=$_GET['search']?>'</h2>
       <?php
         include("database/events.php");
         include_once("templates/display_event.php");

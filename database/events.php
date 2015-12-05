@@ -295,13 +295,33 @@ function getEventsSearch($var, $username){
 }
 
 // return events the user is attending
-function getLimitedUserAttendance($username, $maxEvents = 3){
+function getLimitedUserAttendance($username, $maxEvents, $offset){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('SELECT * FROM  Event WHERE id in (SELECT eventId FROM Attending WHERE username = :username ORDER BY eventId DESC LIMIT :maxEvents)');
+	$stmt = $db->prepare('SELECT * FROM  Event WHERE id in (SELECT eventId FROM Attending WHERE username = :username ORDER BY eventId DESC) ORDER BY id DESC LIMIT :maxEvents OFFSET :offset');
 
 	$stmt->bindParam(':maxEvents', $maxEvents, PDO::PARAM_INT);
+	$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
+	try{
+   		$stmt->execute();
+   		return $stmt->fetchAll();
+  	} catch(PDOException $e) {
+    	return false;
+  	}
+}
+
+// return events the user has created
+function getLimitedUserCreations($username, $maxEvents, $offset){
+	// open database
+	global $db;
+
+	$stmt = $db->prepare('SELECT * FROM Event WHERE creator = :username ORDER BY id DESC LIMIT :maxEvents OFFSET :offset');
+
+	$stmt->bindParam(':maxEvents', $maxEvents, PDO::PARAM_INT);
+	$stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
 
 	try{

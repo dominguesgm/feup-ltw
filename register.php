@@ -8,13 +8,21 @@
   </head>
   <body>
     <h2>Register</h2>
+    <div id="error"></div>
       <form class="register">
+        <label>Username*</label>
         <input name="username" type="text" placeholder="Username"/>
+        <label>Password*</label>
         <input name="password" type="password" placeholder="Password"/>
+        <label>Repeat Password*</label>
         <input name="passcheck" type="password" placeholder="Repeat Password" />
+        <label>Email*</label>
         <input name="email" type="email" placeholder="Email"/>
-        <input name="fullName" type="text" placeholder="Name"/>
+        <label>Full Name*</label>
+        <input name="name" type="text" placeholder="Name"/>
+        <label>Phone Number</label>
         <input name="phoneNumber" type="text" placeholder="Phone Number (optional)"/>
+        <label>City*</label>
         <input name="city" type="text" placeholder="City"/>
         <input name="register" type="submit" value="Register"/>
       </form>
