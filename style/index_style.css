@@ -1,0 +1,38 @@
+/*
+ * Segment for header
+ *
+**/
+
+div#floatingHeader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: green;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+}
+
+div#floatingHeader > a{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+div#floatingHeader > input{
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+body {
+  margin-top: 30px;
+}
+
+
+
+
+
+/*
+ * Segment for home page
+**/
