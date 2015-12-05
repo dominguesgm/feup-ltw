@@ -7,9 +7,9 @@
   </head>
   <body>
     <div id="floatingHeader">
-      <a href="./">Home</a>
-      <a href="./new_event.php">Create Event</a>
+      <a class="myButton" href="./">Home</a>
+      <a class="myButton" href="./new_event.php">Create Event</a>
       <input id="search" type="text" name="search" placeholder="Events & Users"/>
-      <?php echo '<a id="user" href="?user=' . $_SESSION['username'] . '">' . $_SESSION['username'] . '</a>'?>
-      <a href="database/action_logout.php">Logout</a>
+      <?php echo '<a id="user" class="myButton" href="?user=' . $_SESSION['username'] . '">' . $_SESSION['username'] . '</a>'?>
+      <a class="myButton" href="database/action_logout.php">Logout</a>
     </div>

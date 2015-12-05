@@ -1,3 +1,9 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 /*
  * Segment for header
  *
@@ -15,15 +21,59 @@ div#floatingHeader{
   line-height: 30px;
 }
 
-div#floatingHeader > a{
-  margin-right: 10px;
-  margin-left: 10px;
+@media screen and (min-width:800px) {
+  div#floatingHeader > input{
+    width:400px;
+    margin-right: 25px;
+    margin-left: 25px;
+  }
+  div#floatingHeader > a{
+    margin-right: 10px;
+    margin-left: 10px;
+    line-height: 25px;
+  }
+}
+@media screen and (max-width:799px) and (min-width:570px){
+  div#floatingHeader > input{
+    margin-right: 25px;
+    margin-left: 25px;
+  }
+  div#floatingHeader > a{
+    margin-right: 10px;
+    margin-left: 10px;
+    line-height: 25px;
+  }
+}
+@media screen and (max-width:569px) {
+  div#floatingHeader > a{
+    line-height: 25px;
+  }
+  div#floatingHeader > input{
+    width:100px;
+  }
 }
 
-div#floatingHeader > input{
-  margin-right: 100px;
-  margin-left: 100px;
+.myButton {
+	background-color:#44c767;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
 }
+.myButton:hover {
+	background-color:#5cbf2a;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 
 body {
   margin-top: 30px;
