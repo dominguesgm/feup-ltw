@@ -13,9 +13,11 @@
         include("database/events.php");
         include_once("templates/display_event.php");
         $finalSearch = getEventsSearch($_GET['search'], $_SESSION['username']);    // print search result
-        for($i = 0; $i < count($finalSearch); $i++){
-          displaySmallEvent($finalSearch[$i]);
-        }
+        if(count($finalSearch)){
+          for($i = 0; $i < count($finalSearch); $i++){
+            displaySmallEvent($finalSearch[$i]);
+          }
+        } else echo '<p class="text">No events match the search parameters</p>';
       ?>
     </div><?php
 
@@ -57,7 +59,7 @@
         </div>
         <script type="text/javascript" src="scripts/event_item.js"></script>
         <link rel="stylesheet" href="style/event_item_style.css"><?php
-        
+
       } else {?>
         <div id="attending" class="displayEvents">
           <h1>Events you are going to attend</h1>

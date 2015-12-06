@@ -2,7 +2,7 @@
   <br>
   <img id="image" src="images/thumbs_medium/<?=$event['imageURL']?>" width="250" height="250">
   <div id="event_info">
-    <h3><?=$event['nameTag']?></h3>
+    <h2><?=$event['nameTag']?></h3>
     <h4><?=$event['type']?></h4>
     <h4>When? <label><?php echo str_replace("T",", ",$event['time']) ?></label></h4>
     <h4>Where? <label> <?=$event['city']?><?php if($event['address'] != ""){?>, <?=$event['address']?><?php } ?></label>
@@ -14,8 +14,7 @@
   </div>
   <div id="options">
     <?php
-      if(isset($_SESSION['username'])) {
-        if($event['creator']==$_SESSION['username']) { ?>
+        if($event['creator']==$_SESSION['username'] && !hasEventHappened($_GET['event'])) { ?>
           <div class="warning" id="inviteWarning"></div>
           <button data-event="<?=$event['id']?>" id="invite" type="button">Invite</button>
           <br><br>
@@ -26,15 +25,19 @@
           <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>, '<?=$event['imageURL']?>')">Cancel</button>
           <h4>Already invited: </h4>
           <ul id="usersInvited">
-            <?php for($i = 0; $i < count($invites); $i++){
+            <?php if(count($invites) == 0){
+              echo '<li data-user="none">No user has been invited yet</li>';
+            }
+              for($i = 0; $i < count($invites); $i++){
                     echo '<li data-user="' . $invites[$i]['username'] . '" data-event="' . $event['id'] . '"><a href="./?user=' . $invites[$i]['username'] . '">' . $invites[$i]['username'] . '</a> <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>';
             }?>
           </ul>
-    <?php } else { if(!isAttendingEvent($_SESSION['username'], $event['id'])) {?>
+    <?php } else { if(!hasEventHappened($_GET['event'])) {
+        if(!isAttendingEvent($_SESSION['username'], $event['id'])) {?>
         <button id="attendance" type="button" onclick="attend('<?=$_SESSION['username']?>', <?=$event['id']?>)">Attend</button>
-    <?php } else {?>
+        <?php } else {?>
         <button id="attendance" type="button" onclick="attend('<?=$_SESSION['username']?>', <?=$event['id']?>)">Do not attend</button> <?php } } }?>
-
+        <h4 id="usersAttending">Going:</h4>
         <ul id="attendance">
           <button id="showAttendance" data-event="<?=$event['id']?>">Show attendance</button>
         </ul>

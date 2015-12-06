@@ -279,16 +279,21 @@ function getEventsSearch($var, $username){
 	$var = '%' . $var . '%';
 
 	$stmt1 = $db->prepare('SELECT * FROM Event, Invited WHERE username = :username AND eventId = id AND publicEvent = 0 AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
+	$stmt3 = $db->prepare('SELECT * FROM Event WHERE creator = :username AND publicEvent = 0 AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
 	$stmt2 = $db->prepare('SELECT * FROM Event WHERE (publicEvent = 1) AND (type LIKE :var OR city LIKE :var OR nameTag LIKE :var OR description LIKE :var OR creator LIKE :var) ORDER BY id DESC');
+
 
 	$stmt1->bindParam(':var', $var, PDO::PARAM_STR);
 	$stmt1->bindParam(':username', $username, PDO::PARAM_STR);
 	$stmt2->bindParam(':var', $var, PDO::PARAM_STR);
+	$stmt3->bindParam(':var', $var, PDO::PARAM_STR);
+	$stmt3->bindParam(':username', $username, PDO::PARAM_STR);
 
 	try{
    		$stmt1->execute();
 			$stmt2->execute();
-   		return array_merge($stmt1->fetchAll(), $stmt2->fetchAll());
+			$stmt3->execute();
+   		return array_merge($stmt1->fetchAll(), $stmt2->fetchAll(), $stmt3->fetchAll());
   	} catch(PDOException $e) {
     	return false;
   	}
@@ -360,6 +365,25 @@ function eventAttendance($eventId){
 	try{
 		$stmt->execute();
 		return $stmt->fetchAll();
+	} catch(PDOException $e){
+		return false;
+	}
+}
+
+// Checks if event has already happened
+function hasEventHappened($eventId){
+	global $db;
+
+	$currentDate = date("Y-m-d H:i");
+
+	$stmt = $db->prepare('SELECT * FROM Event WHERE id = :eventId AND datetime(time) <= datetime(:currentDate)');
+
+	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
+	$stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
+
+	try{
+		$stmt->execute();
+		return count($stmt->fetchAll()) > 0;
 	} catch(PDOException $e){
 		return false;
 	}
