@@ -333,13 +333,13 @@ function getLimitedUserCreations($username, $maxEvents, $offset){
 }
 
 // Check if event exists
-function eventExists($eventId){
+function eventExists($eventsId){
 	// open database
 	global $db;
 
-	$stmt = $db->prepare('SELECT * FROM Event WHERE id = :eventId');
+	$stmt = $db->prepare('SELECT * FROM Event WHERE id = :eventsId');
 
-	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
+	$stmt->bindParam(':eventsId', $eventsId, PDO::PARAM_INT);
 
 	try{
    		$stmt->execute();
@@ -347,21 +347,5 @@ function eventExists($eventId){
   	} catch(PDOException $e) {
     	return false;
   	}
-}
-
-// Return the attendance of a certain event
-function eventAttendance($eventId){
-	global $db;
-
-	$stmt = $db->prepare('SELECT username FROM Event, Attending WHERE id = :eventId AND id = eventId');
-
-	$stmt->bindParam(':eventId', $eventId, PDO::PARAM_INT);
-
-	try{
-		$stmt->execute();
-		return $stmt->fetchAll();
-	} catch(PDOException $e){
-		return false;
-	}
 }
 ?>

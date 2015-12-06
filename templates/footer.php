@@ -1,4 +1,3 @@
-    </div>
-    <div id="footer">
-      <p> Events 2015 </p>
-    </div>
+<footer>
+  <p> Events 2015 </p>
+</footer>

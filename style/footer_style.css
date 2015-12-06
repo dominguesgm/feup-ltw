@@ -1,0 +1,11 @@
+footer{
+  font-family: "Helvetica", Arial, sans-serif;
+  display: block;
+  background-color: green;
+  text-align: center;
+  vertical-align: middle;
+  clear: both;
+  position: relative;
+  z-index: 10;
+  height: 3em;
+}

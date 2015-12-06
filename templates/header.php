@@ -2,7 +2,8 @@
   <head>
     <title>EventNetwork</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="style/index_style.css">
+    <link rel="stylesheet" type="text/css" href="style/header_style.css">
+    <link rel="stylesheet" type="text/css" href="style/footer_style.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   </head>
   <body>
