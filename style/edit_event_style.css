@@ -19,21 +19,11 @@
 	top:1px;
 }
 
-html, body {
-  margin: 0em;
-  padding: 0em;
-  background-color: #5cbf2a;
-}
-
 div#edit_event_form {
   padding: 1em;
   background-color: #ffffff;
-  position:relative;
-  top: 10%;
-  bottom: 10%;
-  left: 15%;
-  right: 15%;
-  width:  50%;
+	max-width: 800px;
+	margin: 0 auto;
   font-family: "Helvetica", Arial, sans-serif;
 }
 

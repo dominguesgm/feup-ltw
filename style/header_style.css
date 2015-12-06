@@ -4,6 +4,13 @@
           box-sizing: border-box;
 }
 
+html, body {
+  margin: 0em;
+  padding: 0em;
+  background-color: #5cbf2a;
+}
+
+
 /*
  * Segment for header
  *
@@ -19,6 +26,7 @@ div#floatingHeader{
   text-align: center;
   vertical-align: middle;
   line-height: 30px;
+  z-index:10;
 }
 
 div#floatingHeader > input{
@@ -85,4 +93,10 @@ div#floatingHeader > input:focus{
 .myButton:active {
 	position:relative;
 	top:1px;
+}
+
+
+
+body {
+  margin-top: 40px;
 }
