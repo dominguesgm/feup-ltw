@@ -14,7 +14,7 @@
   </div>
   <div id="options">
     <?php
-        if($event['creator']==$_SESSION['username'] && !hasEventHappened($_GET['event'])) { ?>
+        if($event['creator']==$_SESSION['username']) { ?>
           <div class="warning" id="inviteWarning"></div>
           <button id="invite" data-event="<?=$event['id']?>" type="button">Invite</button>
           <br><br>

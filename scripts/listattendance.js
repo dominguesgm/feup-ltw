@@ -1,27 +1,3 @@
-function loadAttendingEvents(){
-  var attending = {};
-  attending['attending'] = "";
-  $.ajax({
-    type: "post",
-    url: "database/attendance.php",
-    datatype: "json",
-    data: JSON.stringify(attending)
-  }).done(function(html){
-    var jsonResponse;
-    jsonResponse=JSON.parse(html);
-    console.log(jsonResponse);
-
-    var divContent = "<h1>Events you are attending...</h1>";
-
-    // TODO format event data nicely, plus place "no events to attend" message
-
-    divContent = getEventString(jsonResponse, divContent);
-    if(divContent=="<h1>Events you are attending...</h1>")
-      divContent+="<h4>You are not attending any events.</h4><br>";
-
-    $("div#attending").html(divContent);
-  });
-}
 
 $("button#loadAttendedEvents").click(function(){
   console.log("clicked");
@@ -52,7 +28,7 @@ function getEventString(jsonResponse, stringStart){
   for(var i = 0; i < jsonResponse.length; i++){
     stringStart += '<div class="shortEvent">' +
     '<img src="images/thumbs_medium/' + jsonResponse[i]['imageURL'] + '" width="150" height="150">' +
-      '<h2><a href="./?event=' + jsonResponse[i]['id']  + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +   
+      '<h2><a href="./?event=' + jsonResponse[i]['id']  + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +
          '<h4>' + jsonResponse[i]['type'] + '</h4>' +
          '<h4>Created by <a href="./?user=' + jsonResponse[i]['creator'] + '" >' + jsonResponse[i]['creator'] + '</a></h4>' +
          '<h4>' + jsonResponse[i]['city'] + ', ' + jsonResponse[i]['time'].replace("T",", ") + '</h4>';
@@ -61,5 +37,3 @@ function getEventString(jsonResponse, stringStart){
   }
   return stringStart;
 }
-
-$(document).ready(loadAttendingEvents);

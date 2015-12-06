@@ -383,4 +383,23 @@ function hasEventHappened($eventId){
 		return false;
 	}
 }
+
+function userComingEvents($username){
+	global $db;
+
+	date_default_timezone_set("UTC");
+  $currentDate = date("Y-m-d H:i");
+
+	$stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) > datetime( :currentDate ) ORDER BY datetime(time) DESC");
+
+	$stmt->bindParam(":username", $_SESSION['username'], PDO::PARAM_STR);
+  $stmt->bindParam(":currentDate", $currentDate, PDO::PARAM_STR);
+
+	try{
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }catch(PDOException $e){
+    return false;
+  }
+}
 ?>

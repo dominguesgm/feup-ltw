@@ -65,7 +65,8 @@
       } else {?>
         <div id="attending" class="displayEvents">
           <h1>Events you are attending...</h1>
-          <img class="waiting" src="res/loading.gif" width="50" height="50">
+          <?php include_once("database/events.php");
+          include("templates/coming_events.php");?>
         </div>
         <br>
         <div id="attended" class="displayEvents">

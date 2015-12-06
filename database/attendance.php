@@ -10,9 +10,6 @@ if(isset($body)){
 
   if(isset($json['attended']))
     $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) < datetime( :currentDate ) ORDER BY datetime(time) DESC");
-  else
-    $stmt = $db->prepare("SELECT id, nameTag, creator, type, description, time, city, address, imageURL, publicEvent FROM Event, Attending WHERE eventId = id AND username = :username AND datetime(time) > datetime( :currentDate ) ORDER BY datetime(time) DESC");
-
   $stmt->bindParam(":username", $_SESSION['username'], PDO::PARAM_STR);
   $stmt->bindParam(":currentDate", $currentDate, PDO::PARAM_STR);
 
@@ -24,19 +21,11 @@ if(isset($body)){
     return;
   }
 
-  $jsonResponse = array();
-
-  for($i = 0; $i < count($result); $i++){
-    $tempArray = array("nameTag" => $result[$i]['nameTag'], "creator" => $result[$i]['creator'], "type" => $result[$i]['type'],
-                      "city" => $result[$i]['city'], "time" => $result[$i]['time'], "address" => $result[$i]['address'],
-                      "description" => $result[$i]['description'], "imageURL" => $result[$i]['imageURL'], "id" => $result[$i]["id"]);
-    $jsonResponse[$i] = $tempArray;
-  }
 
   if(count($result) == 0)
     echo json_encode(array("empty" => "No events to attend"));
   else
-    echo json_encode($jsonResponse);
+    echo json_encode($result);
 
 }
 //TODO test
