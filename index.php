@@ -8,6 +8,7 @@
     // In the case of a search
     //new function for events, get 10 events starting on result x
     ?><div id="listEvents" class="displayEvents" data-query="<?=$_GET['search']?>" data-user="<?=$_SESSION['username']?>">
+      <img class="waiting" src="res/search.png" width="50" height="50">
       <h2>Search Results for '<?=$_GET['search']?>'...</h2>
       <?php
         include("database/events.php");
@@ -63,13 +64,16 @@
         <link rel="stylesheet" href="style/event_item_style.css"><?php
 
       } else {?>
+        <br>
         <div id="attending" class="displayEvents">
+          <img class="icon" src="res/attending.png" width="50" height="50">
           <h1>Events you are attending...</h1>
           <?php include_once("database/events.php");
           include("templates/coming_events.php");?>
         </div>
         <br>
         <div id="attended" class="displayEvents">
+          <img class="icon" src="res/attended.png" width="50" height="50">
           <h1>Events you attended...</h1>
           <button id="loadAttendedEvents">Show events attended</button>
         </div>

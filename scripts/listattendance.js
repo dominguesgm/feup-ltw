@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+=======
+function loadAttendingEvents(){
+  var attending = {};
+  attending['attending'] = "";
+  $.ajax({
+    type: "post",
+    url: "database/attendance.php",
+    datatype: "json",
+    data: JSON.stringify(attending)
+  }).done(function(html){
+    var jsonResponse;
+    jsonResponse=JSON.parse(html);
+    console.log(jsonResponse);
+    var header = '<img class="icon" src="res/attending.png" width="50" height="50"><h1>Events you are attending...</h1>';
+    var divContent = header;
+
+    // TODO format event data nicely, plus place "no events to attend" message
+
+    divContent = getEventString(jsonResponse, divContent);
+    if(divContent==header)
+      divContent+="<h4>You are not attending any events.</h4><br>";
+
+    $("div#attending").html(divContent);
+  });
+}
+>>>>>>> f8a0be0b7b93f1af2f2df110151c404e4cf9006e
 
 $("button#loadAttendedEvents").click(function(){
   console.log("clicked");
@@ -12,11 +39,12 @@ $("button#loadAttendedEvents").click(function(){
     var jsonResponse;
     jsonResponse=JSON.parse(html);
     console.log(jsonResponse);
-    var divContent = "<h1>Events you attended...</h1>";
+    var header = '<img class="icon" src="res/attended.png" width="50" height="50"><h1>Events you attended...</h1>';
+    var divContent = header;
 
     divContent = getEventString(jsonResponse, divContent);
 
-    if(divContent=="<h1>Events you attended...</h1>")
+    if(divContent==header)
       divContent+="<h4>You have not attended an event yet.</h4><br>";
 
     $("div#attended").html(divContent);
