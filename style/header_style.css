@@ -10,6 +10,10 @@ html, body {
   background-color: #5cbf2a;
 }
 
+body{
+  margin-top: 40px;
+}
+
 
 /*
  * Segment for header

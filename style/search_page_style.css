@@ -4,6 +4,10 @@ html, body {
   background-color: #5cbf2a;
 }
 
+body{
+  margin-top: 40px;
+}
+
 div#listEvents {
   padding: 1em;
   background-color: #ffffff;

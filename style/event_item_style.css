@@ -20,6 +20,18 @@
 	top:1px;
 }
 
+p.noEvent {
+  padding: 1em;
+  background-color: #ffffff;
+  position:relative;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  width:  50%;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
 #addComment{
   margin-top: 5px;
 }
@@ -37,6 +49,7 @@ img#commentImg{
 
 html, body {
   margin: 0em;
+  margin-top: 40px;
   padding: 0em;
   background-color: #5cbf2a;
 }
