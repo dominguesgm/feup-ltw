@@ -10,11 +10,15 @@ function loadAttendingEvents(){
     var jsonResponse;
     jsonResponse=JSON.parse(html);
     console.log(jsonResponse);
-    var divContent = "<h1>Events you are going to attend</h1>";
+
+    var divContent = "<h1>Events you are attending...</h1>";
 
     // TODO format event data nicely, plus place "no events to attend" message
 
     divContent = getEventString(jsonResponse, divContent);
+    if(divContent=="<h1>Events you are attending...</h1>")
+      divContent+="<h4>You are not attending any events.</h4><br>";
+
     $("div#attending").html(divContent);
   });
 }
@@ -32,11 +36,13 @@ $("button#loadAttendedEvents").click(function(){
     var jsonResponse;
     jsonResponse=JSON.parse(html);
     console.log(jsonResponse);
-    var divContent = "<h1>Events you attended</h1>";
-
-    // TODO format event data nicely, plus place "no events to attend" message
+    var divContent = "<h1>Events you attended...</h1>";
 
     divContent = getEventString(jsonResponse, divContent);
+
+    if(divContent=="<h1>Events you attended...</h1>")
+      divContent+="<h4>You have not attended an event yet.</h4><br>";
+
     $("div#attended").html(divContent);
   });
 });
@@ -44,19 +50,14 @@ $("button#loadAttendedEvents").click(function(){
 // Get html string that represents a single short event
 function getEventString(jsonResponse, stringStart){
   for(var i = 0; i < jsonResponse.length; i++){
-    stringStart += '<div class="shortEvent">' + '<h2><a href="./?event=' + jsonResponse[i]['id'] + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +
-                                                '<h4>By: <a href="./?user=' + jsonResponse[i]['creator'] + '" >' + jsonResponse[i]['creator'] + '</a></h4>' +
-                                                '<h4>What: ' + jsonResponse[i]['type'] + '</h4>' +
-                                                '<h4>Where: ' + jsonResponse[i]['city'] + '</h4>' +
-                                                '<h4>When: ' + jsonResponse[i]['time'] + '</h4>';
-    if(jsonResponse[i]['address'] != "")
-      stringStart += '<h6>Where exactly: ' + jsonResponse[i]['address'] + '</h6>';
+    stringStart += '<div class="shortEvent">' +
+    '<img src="images/thumbs_medium/' + jsonResponse[i]['imageURL'] + '" width="150" height="150">' +
+      '<h2><a href="./?event=' + jsonResponse[i]['id']  + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +   
+         '<h4>' + jsonResponse[i]['type'] + '</h4>' +
+         '<h4>Created by <a href="./?user=' + jsonResponse[i]['creator'] + '" >' + jsonResponse[i]['creator'] + '</a></h4>' +
+         '<h4>' + jsonResponse[i]['city'] + ', ' + jsonResponse[i]['time'].replace("T",", ") + '</h4>';
 
-    stringStart += '<p>Description: ' + jsonResponse[i]['description'] + '</p>';
-
-    if(jsonResponse[i]['imageURL'] != "")
-      stringStart += '<img src="' + jsonResponse[i]['imageURL'] + '">';
-    stringStart += '</div>';
+    stringStart += '</div><br><br>';
   }
   return stringStart;
 }

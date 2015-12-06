@@ -8,7 +8,7 @@
     // In the case of a search
     //new function for events, get 10 events starting on result x
     ?><div id="listEvents" class="displayEvents">
-      <h2>Search Results for '<?=$_GET['search']?>'</h2>
+      <h2>Search Results for '<?=$_GET['search']?>'...</h2><br>
       <?php
         include("database/events.php");
         include_once("templates/display_event.php");
@@ -17,9 +17,11 @@
           for($i = 0; $i < count($finalSearch); $i++){
             displaySmallEvent($finalSearch[$i]);
           }
-        } else echo '<p class="text">No events match the search parameters</p>';
+        } else echo '<p class="text">No events match the search parameters...</p>';
       ?>
-    </div><?php
+    </div>
+    <link rel="stylesheet" href="style/search_page_style.css">
+    <?php
 
   } else {
     if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
@@ -62,18 +64,19 @@
 
       } else {?>
         <div id="attending" class="displayEvents">
-          <h1>Events you are going to attend</h1>
-          <img src="res/loading.gif">
+          <h1>Events you are attending...</h1>
+          <img class="waiting" src="res/loading.gif" width="50" height="50">
         </div>
+        <br>
         <div id="attended" class="displayEvents">
-          <h1>Events you attended</h1>
-          <button id="loadAttendedEvents">Events Atended</button>
+          <h1>Events you attended...</h1>
+          <button id="loadAttendedEvents">Show events attended</button>
         </div>
         <script type="text/javascript" src="scripts/listattendance.js"></script>
+        <link rel="stylesheet" href="style/index_page_style.css">
         <?php
       }
     }
   }?>
   </body>
-  <script type="text/javascript" src="scripts/main.js"></script>
 </html>

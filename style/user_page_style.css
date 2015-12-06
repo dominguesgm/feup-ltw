@@ -1,4 +1,4 @@
-input#editUser, input#deleteUser {
+input#editUser, input#deleteUser , button{
   display: block;
 	background-color:#44c767;
 	-moz-border-radius:5px;
@@ -13,11 +13,11 @@ input#editUser, input#deleteUser {
 	text-shadow:0px 1px 0px #2f6627;
 }
 
-input#editUser, input#deleteUser:hover {
+input#editUser:hover, input#deleteUser:hover , button:hover{
 	background-color:#5cbf2a;
 }
 
-input#editUser, input#deleteUser:active {
+input#editUser:active, input#deleteUser:active , button:active{
 	position:relative;
 	top:1px;
 }
@@ -68,4 +68,9 @@ p.eventDesc {
 img{
   float: left;
   margin: 10px 10px 10px 10px;
+}
+
+button {
+  display: block;
+  clear: both;
 }

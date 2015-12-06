@@ -5,6 +5,7 @@
   <head>
     <title>EventNetwork</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style/login_style.css">
   </head>
   <body>
     <h2>Login</h2>

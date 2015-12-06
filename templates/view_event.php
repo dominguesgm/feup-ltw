@@ -16,7 +16,7 @@
     <?php
         if($event['creator']==$_SESSION['username'] && !hasEventHappened($_GET['event'])) { ?>
           <div class="warning" id="inviteWarning"></div>
-          <button data-event="<?=$event['id']?>" id="invite" type="button">Invite</button>
+          <button id="invite" data-event="<?=$event['id']?>" type="button">Invite</button>
           <br><br>
           <form action="edit_event.php" method="post">
             <input type="text" name="id" value="<?=$event['id']?>" hidden readonly>

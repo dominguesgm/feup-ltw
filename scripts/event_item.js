@@ -210,7 +210,8 @@ $('button#showAttendance').on("click", function(){
 $("button#invite").on("click", inviteToEvent);
 
 function main(){
-  if($("#attendance").text()!='Do not attend') 
+  // hide comments if not creator nor attending
+  if($("#attendance").text()!='Do not attend' && $("#invite").text()!='Invite')
     toggleComments(); 
 }
 

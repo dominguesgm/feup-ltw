@@ -1,0 +1,44 @@
+html, body {
+  margin: 0em;
+  padding: 0em;
+  background-color: #5cbf2a;
+}
+
+div#listEvents {
+  padding: 1em;
+  background-color: #ffffff;
+  position:relative;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  width:  50%;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+div.shortEvent {
+  clear: both;
+}
+
+div#listEvents a:link{
+  color: black;
+  font-weight: bold;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+div#listEvents a:visited{
+  color: #2e2e1f;
+  font-weight: bold;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+
+label {
+  display: inline;
+  font-weight: normal;
+}
+
+img{
+  float: left;
+  margin: 10px 10px 10px 10px;
+}
