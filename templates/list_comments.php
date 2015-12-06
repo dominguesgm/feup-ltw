@@ -3,7 +3,7 @@
   <h3>Comments</h3>
   <div class="commentList">
     <?php foreach ($comments as $comment) { ?>
-        <div id="comment" class="comment">
+        <div class="comment">
           <p class="text"><?=$comment['commentContent']?></p>
           <div class="authorNtime">Written by <a id="userRef" href="./?user=<?=$comment['username']?>"><?=$comment['username']?></a>  on <?=$comment['time']?></div>
         </div><br>

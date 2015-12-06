@@ -8,14 +8,14 @@ function clearComment(comment){
   $(".noComments").remove();
 
   // add new comment
-  var newComment = $('<div id="comment"></div>');
+  var newComment = $('<div class="comment"></div>');
   newComment.className="comment";
   var text = $("<p></p>").text(comment['commentContent']);
   text.className="text";
   var author = $("<div></div>").text('Written by ' + comment['username'] + ' on ' + comment['time']);
   author.className="authorNtime";
   var newLine = $("<br>");
-  
+
   newComment.append(text, author);
 
   $(".commentList").append(newComment, newLine);
@@ -49,6 +49,11 @@ function inviteToEvent(){
         console.log(html);
         jsonResponse=JSON.parse(html);
         if('success' in jsonResponse){
+          $('ul#usersInvited > li').each(function(){
+            if($(this).data("user") == "none"){
+              $(this).remove();
+            }
+          });
           $("ul#usersInvited").append("<li data-user='" + invitedUser + "' data-event='" + eventId + "'><a href='./?user="+invitedUser+ "'>" + invitedUser + '</a> <img class="removeInvite" src="res/cross.png" width="8" height="8"></li>');
           $("img.removeInvite").on("click", removeInvite);
         } else {
@@ -162,6 +167,9 @@ function removeInvite(){
     jsonResponse=JSON.parse(html);
     if('success' in jsonResponse){
       liToDelete.remove();
+      if($('ul#usersInvited > li').length == 0){
+        $('ul#usersInvited').append('<li data-user="none">No user has been invited yet</li>');
+      }
     }
   });
 }
