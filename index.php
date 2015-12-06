@@ -7,19 +7,19 @@
   if(isset($_GET['search']) && !isset($_GET['event']) && !isset($_GET['user'])){
     // In the case of a search
     //new function for events, get 10 events starting on result x
-    ?><div id="listEvents" class="displayEvents">
+    ?><div id="listEvents" class="displayEvents" data-query="<?=$_GET['search']?>" data-user="<?=$_SESSION['username']?>">
       <h2>Search Results for '<?=$_GET['search']?>'</h2>
       <?php
         include("database/events.php");
         include_once("templates/display_event.php");
-        $finalSearch = getEventsSearch($_GET['search'], $_SESSION['username']);    // print search result
+        $finalSearch = getEventsSearch($_GET['search'], $_SESSION['username'], 3, 0);    // print search result
         if(count($finalSearch)){
           for($i = 0; $i < count($finalSearch); $i++){
             displaySmallEvent($finalSearch[$i]);
           }
         } else echo '<p class="text">No events match the search parameters</p>';
       ?>
-    </div><?php
+    </div><script type="text/javascript" src="scripts/search.js"></script><?php
 
   } else {
     if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
