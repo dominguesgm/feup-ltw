@@ -1,5 +1,5 @@
 <div id="new_event_form">
-  <img src="images/originals/callendar.png" width="80" height="80">
+  <img src="res/callendar.png" width="80" height="80">
   <h2> Create a new event </h2>
   <form name="new_event" id="new_event" action="upload.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="id" />

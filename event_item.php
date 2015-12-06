@@ -14,6 +14,7 @@
 
   if (!$event) die();
 
+  // check permissions to view the event
   if(!($event['publicEvent']==1 || $event['creator']==$_SESSION['username'] || isInvited($_SESSION['username'], $event['id'])))
     die();
 
@@ -24,4 +25,5 @@
   </body>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="scripts/event_item.js"></script>
+    <link rel="stylesheet" href="style/event_item_style.css">
 </html>

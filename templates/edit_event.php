@@ -1,5 +1,5 @@
 <div id="edit_event_form">
-  <img src="images/originals/callendar.png" width="80" height="80">
+  <img src="res/callendar.png" width="80" height="80">
   <h2> Change this event </h2>
   <form name="edit_event" id="edit_event" action="upload.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?=$event['id']?>" />

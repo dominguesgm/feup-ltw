@@ -1,6 +1,7 @@
 <?php session_start();
   if(!isset($_SESSION['username']))
     header('Location: login.php');
+    
   include_once('templates/header.php');
   include_once('database/events.php');
   $event = getEvent($_POST['id'], $_SESSION['username']);
