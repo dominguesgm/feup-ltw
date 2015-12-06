@@ -12,12 +12,32 @@
   border: 2px solid #5cbf2a;
 	text-shadow:0px 1px 0px #2f6627;
 }
-#edit, #invite, #cancel, #showAttendance, button #attendance :hover {
+#edit:hover, #invite:hover, #cancel:hover, #showAttendance:hover, button #attendance {
 	background-color:#5cbf2a;
 }
-#edit, #invite, #cancel, #showAttendance, button #attendance :active {
+#edit:active, #invite:active, #cancel:active, #showAttendance:active, button:active #attendance {
 	position:relative;
 	top:1px;
+}
+
+button#invite{
+  border-top-left-radius:0px;
+  border-bottom-left-radius:0px;
+  height: 23px;
+}
+
+input#userInvite{
+  outline: none;
+  padding: 3px 0px 3px 3px;
+  border: 1px solid #DDDDDD;
+  border-top-left-radius:7px;
+  border-bottom-left-radius:7px;
+}
+
+input#userInvite:focus{
+  box-shadow: 0 0 5px #44c767;
+  padding: 3px 0px 3px 3px;
+  border: 1px solid #44c767;
 }
 
 #addComment{

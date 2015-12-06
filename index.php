@@ -75,5 +75,4 @@
     }
   }?>
   </body>
-  <script type="text/javascript" src="scripts/main.js"></script>
 </html>

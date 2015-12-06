@@ -24,11 +24,11 @@ html, body {
 	text-shadow:0px 1px 0px #2f6627;
 }
 
-.loginLink, #registerButton:hover {
+.loginLink:hover, #registerButton:hover {
 	background-color:#5cbf2a;
 }
 
-.loginLink, #registerButton:active {
+.loginLink:active, #registerButton:active {
 	position:relative;
 	top:1px;
 }
@@ -52,7 +52,7 @@ form.register input {
   margin: 0;
 }
 
-form.register input:focus{
+form.register input:focus [type=text]{
   box-shadow: 0 0 5px #44c767;
   padding: 3px 0px 3px 3px;
   border: 1px solid #44c767;
