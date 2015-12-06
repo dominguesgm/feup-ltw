@@ -9,10 +9,6 @@
  *
 **/
 
-body {
-  margin-top: 30px;
-}
-
 div#floatingHeader{
   position: fixed;
   top: 0;

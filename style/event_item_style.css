@@ -1,0 +1,66 @@
+#edit, #invite, #cancel, #attendance {
+	background-color:#44c767;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	text-decoration:none;
+  border: 2px solid #5cbf2a;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#edit, #invite, #cancel, #attendance :hover {
+	background-color:#5cbf2a;
+}
+#edit, #invite, #cancel, #attendance :active {
+	position:relative;
+	top:1px;
+}
+
+html, body {
+  margin: 0em;
+  padding: 0em;
+  background-color: #5cbf2a;
+}
+
+div.event-item {
+  padding: 1em;
+  background-color: #ffffff;
+  position:relative;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  width:  50%;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+form#new_event > label {
+  display: block;
+  font-weight: bold;
+}
+
+form#new_event > label.publicEvent{
+  display: inline;
+  font-weight: bold;
+}
+
+form#new_event > input {
+  border-radius: 5px;
+  font: 14px/1.4 "Helvetica", Arial, sans-serif;
+  margin: 0;
+}
+
+form#new_event > input:focus{
+  box-shadow: 0 0 5px #44c767;
+  padding: 3px 0px 3px 3px;
+  border: 1px solid #44c767;
+}
+
+form#new_event > textarea {
+  border-radius: 5px;
+  font: 14px/1.4 "Helvetica", Arial, sans-serif;
+  margin: 0;
+}

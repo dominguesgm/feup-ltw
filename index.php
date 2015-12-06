@@ -8,7 +8,7 @@
     // In the case of a search
     //new function for events, get 10 events starting on result x
     ?><div id="listEvents" class="displayEvents">
-      <h2>Search results for '<?=$_GET['search']?>'</h2>
+      <h2>Search Results for '<?=$_GET['search']?>'</h2>
       <?php
         include("database/events.php");
         include_once("templates/display_event.php");
@@ -22,12 +22,13 @@
   } else {
     if(isset($_GET['user']) && !isset($_GET['search']) && !isset($_GET['event'])){
       // In the case of a user page
-      ?><script type="text/javascript" src="scripts/user_page.js"></script>
-      <div id="userPage">
-        <div id="userHolder" class="contentHolder">
-          <h2><?php echo $_GET['user'] ?></h2>
+      ?><div id="userPage">
+        <div id="userHolder" class="contentHolder" data-user="<?=$_GET['user']?>">
+          <?php include_once("database/user_data.php");
+              include_once("database/events.php");
+              include_once("templates/user_page.php");?>
         </div>
-      </div><?php
+      </div><script type="text/javascript" src="scripts/user_page.js"></script><?php
 
     } else {
       if(isset($_GET['event']) && !isset($_GET['user']) && !isset($_GET['search'])){
