@@ -21,9 +21,13 @@ $data;
      <h4>Contact </h4><label><?=$data['phoneNumber']?></label>
   <?php } if(isset($result['same'])){ ?>
       <br><br>
-     <form method='post' action='edit_user.php'>
+     <form id="editForm" method='post' action='edit_user.php'>
        <input name='username' type='text' value='<?=$data['username']?>' hidden>
        <input id='editUser' value='Edit account' type='submit'></form>
+
+      <form id="deleteForm" method='post' action='action_delete_user.php'>
+       <input name='username' type='text' value='<?=$data['username']?>' hidden>
+       <input id='deleteUser' value='Cancel account' type='submit'></form>
   <?php } ?>
 
       <!-- Events user is attending -->

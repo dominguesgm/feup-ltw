@@ -81,6 +81,19 @@ function userExists($username){
   }
 }
 
+// Deletes a user from the database
+function deleteUser($username){
+	global  $db;
+	$stmt = $db->prepare('DELETE FROM User WHERE username = :username');
+	$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+	try{
+    	$stmt->execute();
+		return true;
+  } catch(PDOException $e) {
+    return false;
+  }
+}
+
 function getUser($username){
 	global $db;
 	$stmt = $db->prepare('SELECT username, city, name, phoneNumber, email FROM User WHERE username = :username');
