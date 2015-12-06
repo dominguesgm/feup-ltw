@@ -44,8 +44,8 @@ $("button#loadAttendedEvents").click(function(){
 // Get html string that represents a single short event
 function getEventString(jsonResponse, stringStart){
   for(var i = 0; i < jsonResponse.length; i++){
-    stringStart += '<div class="shortEvent">' + '<h2><a href="?event=' + jsonResponse[i]['id'] + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +
-                                                '<h4>By: <a href="?user=' + jsonResponse[i]['creator'] + '" >' + jsonResponse[i]['creator'] + '</a></h4>' +
+    stringStart += '<div class="shortEvent">' + '<h2><a href="./?event=' + jsonResponse[i]['id'] + '">' + jsonResponse[i]['nameTag'] + '</a></h2>' +
+                                                '<h4>By: <a href="./?user=' + jsonResponse[i]['creator'] + '" >' + jsonResponse[i]['creator'] + '</a></h4>' +
                                                 '<h4>What: ' + jsonResponse[i]['type'] + '</h4>' +
                                                 '<h4>Where: ' + jsonResponse[i]['city'] + '</h4>' +
                                                 '<h4>When: ' + jsonResponse[i]['time'] + '</h4>';
