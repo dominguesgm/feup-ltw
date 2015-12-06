@@ -30,9 +30,10 @@
               include_once("database/events.php");
               include_once("templates/user_page.php");?>
         </div>
-      </div><script type="text/javascript" src="scripts/user_page.js"></script><?php
-
-    } else {
+      </div>
+      <script type="text/javascript" src="scripts/user_page.js"></script>
+      <link rel="stylesheet" href="style/user_page_style.css">
+      <?php } else {
       if(isset($_GET['event']) && !isset($_GET['user']) && !isset($_GET['search'])){
         // In the case of an event page
         ?>
