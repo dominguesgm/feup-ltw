@@ -1,4 +1,4 @@
-#edit, #invite, #cancel, #showAttendance, #addComment, button #attendance {
+#edit, #invite, #cancel, #showAttendance, #addComment, button#attendance{
   display: block;
 	background-color:#44c767;
 	-moz-border-radius:5px;
@@ -12,10 +12,10 @@
   border: 2px solid #5cbf2a;
 	text-shadow:0px 1px 0px #2f6627;
 }
-#edit, #invite, #cancel, #showAttendance, button #attendance :hover {
+#edit, #invite, #cancel, #showAttendance, button#attendance:hover {
 	background-color:#5cbf2a;
 }
-#edit, #invite, #cancel, #showAttendance, button #attendance :active {
+#edit, #invite, #cancel, #showAttendance, button#attendance:active {
 	position:relative;
 	top:1px;
 }
@@ -28,6 +28,12 @@ img#image{
   float: left;
   margin: 10px 15px 10px 0;
 }
+
+img#commentImg{
+  float: left;
+  margin: 10px 15px 10px 0;
+}
+
 
 html, body {
   margin: 0em;

@@ -1,5 +1,6 @@
 <br>
 <div id="comments" class="comments">
+  <img id="commentImg" src="res/msg.png" width="30" height="30">
   <h3>Comments</h3>
   <div class="commentList">
     <?php foreach ($comments as $comment) { ?>

@@ -25,7 +25,7 @@ $data;
        <input name='username' type='text' value='<?=$data['username']?>' hidden>
        <input id='editUser' value='Edit account' type='submit'></form>
 
-      <form id="deleteForm" method='post' action='action_delete_user.php'>
+      <form id="deleteForm" method='post' action='database/action_delete_user.php'>
        <input name='username' type='text' value='<?=$data['username']?>' hidden>
        <input id='deleteUser' value='Cancel account' type='submit'></form>
   <?php } ?>

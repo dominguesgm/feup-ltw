@@ -21,6 +21,10 @@ function clearComment(comment){
   $(".commentList").append(newComment, newLine);
 };
 
+function toggleComments(){
+  $(".comments").toggle();
+}
+
 function changeAttendanceButton(){
     if(!attending)
       $("#attendance").html('Attend');
@@ -149,6 +153,7 @@ function attend(username, eventId){
       attending = !attending;
       console.log('attending :' + attending);
       changeAttendanceButton();
+      toggleComments();
     }
   });
 };
@@ -197,7 +202,17 @@ function showAttendance(){
 }
 
 $("img.removeInvite").on("click", removeInvite);
+
 $('button#showAttendance').on("click", function(){
   showAttendance();
 });
+
 $("button#invite").on("click", inviteToEvent);
+
+function main(){
+  if($("#attendance").text()!='Do not attend') 
+    toggleComments(); 
+}
+
+$(document).ready(main);
+
