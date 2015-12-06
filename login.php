@@ -8,6 +8,7 @@
   </head>
   <body>
     <h2>Login</h2>
+    <div id="error"></div>
       <form class="login">
         <input name="username" type="text" placeholder="Username"/>
         <input name="password" type="password" placeholder="Password"/>
