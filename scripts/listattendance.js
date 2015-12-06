@@ -10,13 +10,13 @@ function loadAttendingEvents(){
     var jsonResponse;
     jsonResponse=JSON.parse(html);
     console.log(jsonResponse);
-
-    var divContent = "<h1>Events you are attending...</h1>";
+    var header = '<img class="icon" src="res/attending.png" width="50" height="50"><h1>Events you are attending...</h1>';
+    var divContent = header;
 
     // TODO format event data nicely, plus place "no events to attend" message
 
     divContent = getEventString(jsonResponse, divContent);
-    if(divContent=="<h1>Events you are attending...</h1>")
+    if(divContent==header)
       divContent+="<h4>You are not attending any events.</h4><br>";
 
     $("div#attending").html(divContent);
@@ -36,11 +36,12 @@ $("button#loadAttendedEvents").click(function(){
     var jsonResponse;
     jsonResponse=JSON.parse(html);
     console.log(jsonResponse);
-    var divContent = "<h1>Events you attended...</h1>";
+    var header = '<img class="icon" src="res/attended.png" width="50" height="50"><h1>Events you attended...</h1>';
+    var divContent = header;
 
     divContent = getEventString(jsonResponse, divContent);
 
-    if(divContent=="<h1>Events you attended...</h1>")
+    if(divContent==header)
       divContent+="<h4>You have not attended an event yet.</h4><br>";
 
     $("div#attended").html(divContent);

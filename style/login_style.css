@@ -17,10 +17,10 @@ body {
 }
 
 input {
-  diplay: inline-block;
+  diplay: block;
 }
 
-.loginLink, #registerButton{
+#registerLink, #login{
 	background-color:#44c767;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
@@ -30,29 +30,34 @@ input {
 	color:#ffffff;
 	font-family:Arial;
 	text-decoration:none;
-  border: 2px solid #5cbf2a;
+  	border: 2px solid #5cbf2a;
 	text-shadow:0px 1px 0px #2f6627;
 }
 
-.loginLink:hover, #registerButton:hover {
+#registerLink:hover, #login:hover {
 	background-color:#5cbf2a;
 }
 
-.loginLink:active, #registerButton:active {
+#registerLink:active, #login:active {
 	position:relative;
 	top:1px;
 }
 
-.loginLink, #registerButton{
-	background-color:#44c767;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	text-decoration:none;
-  border: 2px solid #5cbf2a;
-	text-shadow:0px 1px 0px #2f6627;
+div.login_div {
+  border-radius: 25px;
+  padding: 1em;
+  background-color: #ffffff;
+  position:relative;
+  top: 10%;
+  bottom: 10%;
+  left: 15%;
+  right: 15%;
+  width:  70%;
+  height: 50%;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+img{
+  float: left;
+  margin: 10px 15px 10px 0;
 }

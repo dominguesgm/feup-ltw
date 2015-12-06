@@ -45,7 +45,7 @@ $data;
         if(count($attendance) == 4){?>
           <button>Show More</button>
         <?php }
-      } else echo '<p>' . $data['name'] . '</p>'?></div>
+      } else echo '<p>Not attending any events...</p>'?></div>
 
       <!-- Events created by user -->
       <h3>Events created by <?=$data['name']?></h3>
@@ -62,7 +62,7 @@ $data;
         if(count($creations) == 4){?>
           <button>Show More</button>
         <?php }
-      } else echo '<p>' . $data['name'] . '</p>'?></div>
+      } else echo '<p>No events created...</p>'?></div>
 <?php } else {?>
   <p>No user with this name was found in the database...</p>
 <?php } ?>
