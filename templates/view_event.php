@@ -22,6 +22,7 @@
             <input type="text" name="id" value="<?=$event['id']?>" hidden readonly>
             <input id="edit" type="submit" value="Edit">
           </form>
+          <br>
           <button id="cancel" type="button" onclick="cancelEvent('<?=$_SESSION['username']?>', <?=$event['id']?>, '<?=$event['imageURL']?>')">Cancel</button>
           <h4>Already invited: </h4>
           <ul id="usersInvited">

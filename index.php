@@ -54,10 +54,10 @@
               include_once("templates/view_event.php");
               include_once("templates/list_comments.php");
             } else {
-              echo "<p>You do not have permission to view this event.</p>";
+              echo "<p class='noEvent'>You do not have permission to view this event.</p>";
             }
           } else {
-            echo "<p>The event you're looking for does not exist.</p>";
+            echo "<p class='noEvent'>The event you're looking for does not exist.</p>";
           }?>
         </div>
         <script type="text/javascript" src="scripts/event_item.js"></script>

@@ -27,18 +27,11 @@ function getResults(){
 }
 
 function displayEvent(event){
-  var eventHtml = '<div class="shortEvent"><h2><a href="./?event=' + event['id'] + '">' + event['nameTag'] + '</a></h2>' +
-                                             '<h4>By: <a href="+/?user=' + event['creator'] + '" >' + event['creator'] + '</a></h4>' +
-                                             '<h4>What: ' + event['type'] + '</h4>' +
-                                             '<h4>Where: ' + event['city'] + '</h4>' +
-                                             '<h4>When: ' + event['time'] + '</h4>' + '</div>';
-
-
-  if(event['address'] != "")
-    eventHtml += '<h6>Where exactly: ' + event['address'] + '</h6>';
-
-  eventHtml += '<p>Description: ' + event['description'] + '</p><img src="images/thumbs_small/' + event['imageURL'] + '.jpg" width="200" height="200"></div>';
-
+  var eventHtml = '<div class="shortEvent"><img src="images/thumbs_medium/' + event['imageURL'] +'.jpg" width="150" height="150">'
+                    + '<h2><a href="./?event=' + event['id'] + '">' + event['nameTag'] + '</a></h2>' +
+           '<h4>' + event['type'] + '</h4>' +
+           '<h4>Created by <a href="+/?user=' + event['creator'] + '" >' + event['creator'] + '</a></h4>' +
+           '<h4>' + event['city'] + ', ' + event['time'].replace("T",", ") + '</h4></div><br><br>';
   $("#listEvents").append(eventHtml);
 }
 
