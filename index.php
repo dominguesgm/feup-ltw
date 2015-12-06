@@ -54,8 +54,9 @@
             echo "<p>The event you're looking for does not exist.</p>";
           }?>
         </div>
-        <script type="text/javascript" src="scripts/event_item.js"></script><?php
-
+        <script type="text/javascript" src="scripts/event_item.js"></script>
+        <link rel="stylesheet" href="style/event_item_style.css"><?php
+        
       } else {?>
         <div id="attending" class="displayEvents">
           <h1>Events you are going to attend</h1>

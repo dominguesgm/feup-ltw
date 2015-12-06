@@ -8,18 +8,17 @@ function clearComment(comment){
   $(".noComments").remove();
 
   // add new comment
-  var newComment = $("<div></div>");
+  var newComment = $('<div id="comment"></div>');
   newComment.className="comment";
   var text = $("<p></p>").text(comment['commentContent']);
   text.className="text";
-  var author = $("<p></p>").text('Written by: ' + comment['username']);
-  author.className="author";
-  var time = $("<p></p>").text('Time: ' + comment['time']);
-  time.className="time";
+  var author = $("<div></div>").text('Written by ' + comment['username'] + ' on ' + comment['time']);
+  author.className="authorNtime";
+  var newLine = $("<br>");
+  
+  newComment.append(text, author);
 
-  newComment.append(text, author, time);
-
-  $(".commentList").append(newComment);
+  $(".commentList").append(newComment, newLine);
 };
 
 function changeAttendanceButton(){
@@ -96,9 +95,12 @@ function addCommentToEvent(username, eventId){
   comment['username']=username;
   comment['eventId']=eventId;
   comment['commentContent']=	$('textarea').val();
-  comment['time']= new Date();
-
-  console.log($('textarea').val());
+  var now = new Date();
+  var options = {
+    weekday: "long", year: "numeric", month: "short",
+    day: "numeric", hour: "2-digit", minute: "2-digit"
+  };
+  comment['time']= now.toLocaleTimeString("en-us", options);
 
   $.ajax({
     type: "post",

@@ -26,7 +26,7 @@
       <input type="file" name="imageURL">
       <br><br>
       <?php if(!$event['publicEvent']) { ?>
-    <label> Public event </label> <?php } ?>
+    <label id="publicEvent"> Public event </label> <?php } ?>
     <input <?php if($event['publicEvent']){ echo 'type=hidden'; }else{ echo 'type=checkbox';}?> name="publicEvent" <?php if($event['publicEvent']) echo 'checked' ?> /><br>
       <br><br>
     <input id="saveEvent" type="button" value="Update event" />
