@@ -14,8 +14,8 @@
         $result['creations'] = getLimitedUserCreations($json['creations'], -1, 3);
         echo json_encode($result);
         return;
-      }
+      } else echo 2;
     }
-  }
+  } else echo 1;
   echo json_encode(array("error" => "while generating events"));
 ?>

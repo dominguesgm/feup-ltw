@@ -4,9 +4,9 @@
 <?php
 $data;
   if(isset($result['same'])) $data = $result['same'];
-  
+
   if(isset($result['different'])) $data = $result['different'];
-  
+
   if(isset($result['same']) || isset($result['different'])){
     $attendance = getLimitedUserAttendance($data['username'], 4, 0);
     $creations = getLimitedUserCreations($data['username'], 4, 0);
@@ -16,7 +16,7 @@ $data;
 
    <h4>City</h4><label><?=$data['city']?></label>
    <h4>Email </h4><label><?=$data['email']?></label>
-  
+
   <?php if($data["phoneNumber"] != "" && $data['phoneNumber'] != null){ ?>
      <h4>Contact </h4><label><?=$data['phoneNumber']?></label>
   <?php } if(isset($result['same'])){ ?>
@@ -48,7 +48,7 @@ $data;
       <div id="creations" class="events">
       <?php if(count($creations) > 0){
         $count = (count($creations) < 4) ? count($creations) : 3;
-        for($i = 0; $i < count($creations); $i++){?>
+        for($i = 0; $i < $count; $i++){?>
           <div class="singleEvent">
             <img src="images/thumbs_small/<?=$creations[$i]['imageURL']?>" width="50" height="50">
             <h4><a href="./?event=<?=$creations[$i]['id']?>"><?=$creations[$i]['nameTag']?></a></h4>

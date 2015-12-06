@@ -1,16 +1,19 @@
-var moreFlag = true;
+var moreFlagAtt = true;
+var moreFlagCre = true;
 
 function buttonAction(){
   var username = $("div#userHolder").data("user");
   var jsonString = "";
-  if($(this).parent().attr("id") == "attendance")
+  if($(this).parent().attr("id") == "attendance"){
     jsonString = JSON.stringify({"attendance": username});
-  else {
+    var thisFlag = moreFlagAtt;
+  } else {
     jsonString = JSON.stringify({"creations": username});
+    var thisFlag = moreFlagCre;
   }
   var button = $(this);
 
-  if(moreFlag)
+  if(thisFlag)
     $.ajax({
       type: "post",
       url: "database/short_event_list.php",
@@ -31,15 +34,16 @@ function buttonAction(){
 function presentEvents(eventData, typeOf){
   var divContent = "";
   var element;
-  moreFlag = false;
-  if(typeOf == "attendance")
+  if(typeOf == "attendance"){
     element = "div#attendance button";
-  else {
+    moreFlagAtt = false;
+  } else {
     element = "div#creations button";
+    moreFlagCre = false;
   }
 
   for(var i = 0; i < eventData.length; i++){
-      divContent += '<div class="singleEvent notBase"><h4><a href="./?event=' + eventData[i]['id'] +
+      divContent += '<div class="singleEvent notBase"><img src="images/thumbs_small/' + eventData[i]['imageURL'] + '"width="50" height="50"><h4><a href="./?event=' + eventData[i]['id'] +
                                             '">' + eventData[i]['nameTag'] +
                                             "</a></h4><p>" + eventData[i]['type'] + " in " + eventData[i]['city'] + "</p></div>";
   }
@@ -55,10 +59,12 @@ function deleteExcess(typeOf){
   if(typeOf == "attendance"){
     element = "div#attendance div.notBase";
     button = "div#attendance button";
+    moreFlagAtt = true;
   }
   else {
     element = "div#creations div.notBase";
     button = "div#creations button";
+    moreFlagCre = true;
   }
   $(button).html("Show More");
 
@@ -68,4 +74,5 @@ function deleteExcess(typeOf){
 }
 //TODO: add a list of the events the person is going to attend
 
-$("div.events button").on("click", buttonAction);
+$("div#attendance button").on("click", buttonAction);
+$("div#creations button").on("click", buttonAction);
